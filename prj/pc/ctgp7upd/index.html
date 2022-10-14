@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="CyberYoshi64,CY64,Millennium64">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon16.png" type="image/png">
+    <link href="/index.css" rel="stylesheet">
+
+    <meta name="og:site_name" content="CyberYoshi64's website">
+    <meta name="theme-color" content="#FF9040" data-react-helmet="true">
+    <meta name="description" content="A Python script to update CTGP-7 for Windows & Linux">
+    <title>CTGP-7 Updater - サイバーヨッシー64</title>
+    </head>
+  <body>
+    <div id="pageContainer">
+      <div id="pagecontent">
+        <pad>
+          <h1 align="center">CY64's CTGP-7 Updater</h1>
+                    <p style="font-size: 150%;">This tool is written in Python and allows you to update using a PC instead of the 3DS.</p>
+                    <p>
+                        Note that I don't intend on replacing the official launcher, I made this tool as a matter of having another source for updates in such circumstances:
+                    </p>
+                    <ul>
+                        <li>You have a PC with an internet connection, but not on the 3DS itself.</li>
+                        <li>The official updater may keep failing due to wack connection and your PC's connection is better.</li>
+                    </ul>
+                <h3>Download & set up the script</h3>
+                    <ol>
+                        <li>If you don't have Python 3 installed, <a href="https://www.python.org/downloads/" target="_blank" class="clklink-nobtn">download it from their site</a> and install it along with Pip.</li>
+                        <li><a href="https://github.com/CyberYoshi64/CTGP7-UpdateTool" target="_blank" class="clklink-nobtn">Download the script here</a> and check the readme below the code browser to see the additional requirements.</li>
+                    </ol>
+                    <h3>Use of the script</h3>
+                    <p>Now that you have set up Python for the script, you can now use the script without cryptic errors.</p>
+                    <p>
+                        <span style="color: var(--note-color);">Note:</span>
+                        Check out the
+                        <a href="https://github.com/CyberYoshi64/CTGP7-UpdateTool/blob/main/README.md" target="_blank" class="clklink-nobtn">ReadMe</a>
+                        for detail about the syntax and how to operate it.
+                    </p>
+          <h3>Troubleshooting</h3>
+                    <p>Do you have issues? Here's some common problems with respective solutions.</p>
+                    <h4>Common between GUI and console</h4>
+          <h5>Failed to download files / HTTP Error</h5>
+          <ul>
+            <li>You might not have an internet connection. Check your ethernet cable or Wi-Fi settings</li>
+            <li>Your internet connection is insufficient. If you use Wi-Fi, try getting closer to your access point.</li>
+          </ul>
+          <h4>Terminal version</h4>
+          <h5>No SD Card or path specified</h5>
+          <p>The tool will attempt to look for any inserted SD Cards. Ensure you inserted the SD Card before running the tool.</p>
+          <p>
+            <span style="color: var(--note-color);">Note:</span>
+            On Linux, the SD Card might not be automatically mounted.
+            You might check your desktop environment's hotplug settings
+            or manually mount the SD Card.
+          </p>
+          If however, the SD Card is not auto-detected, here might be the following reasons:
+          <ul>
+            <li>The inserted SD Card was not previously inserted in a Nintendo 3DS console.</li>
+            <li>The SD Card contents are unreadable, as they are corrupted.</li>
+          </ul>
+          <p>Alternatively, you can also specify the path to the SD Card. Either drag'n'drop the drive to the script file to run or open a terminal and type the path after the script name.</p>
+          <h5>Action taken: (Re-)Install</h5>
+          <ul>
+            <li>There was no CTGP-7 installation detected.</li>
+            <li>The files in CTGP-7/config are modified or corrupted.</li>
+            <li>You specified <code>install</code> as an argument, which ignores the validity of the installation. Should you not intend, remove that argument.</li>
+          </ul>
+          <p></p><br></pad>
+      </div>
+      <!-- <div id="sidebar"></div> -->
+      <div id="header"></div>
+    </div>
+    <script src="/index.js"></script>
+  </body>
+</html>

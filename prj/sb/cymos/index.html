@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="CyberYoshi64,CY64,Millennium64">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon16.png" type="image/png">
+    <link href="/index.css" rel="stylesheet">
+
+    <meta name="og:site_name" content="CyberYoshi64's website">
+    <meta name="theme-color" content="#00C0FF" data-react-helmet="true">
+    <meta name="description" content="A mock operating system for SmileBASIC">
+    <title>CYMOS - サイバーヨッシー64</title>
+  </head>
+  <body>
+    <div id="pageContainer">
+      <div id="pagecontent">
+        <pad>
+          <h1 align="center">CYMOS (サカキバラUI)</h1>
+                    <p style="font-size: 150%;">サカキバラUI is a mock operating system designed to look like Windows.</p>
+                    <p>This project was started on December 26th, 2017.</p>
+                    <p>There were the following versions:</p>
+                    <ul>
+                      <li>サカキバラUI: Nintendo 3DS edition
+                        <span class="clklink-nobtn">
+                        <a href="https://old.smilebasicsource.com/page?pid=1030" target="_blank">Old SBS</a>
+                        <a href="http://old.smilebasicsource.com/forum?ftid=1635" target="_blank">(thread)</a>
+                        </span>
+                        <span style="color: var(--sidenote-color);">Archived key: <code>NDQXKEA3</code></span>
+                      <li>サカキバラUI: Nintendo Switch edition
+                        <span style="color: var(--err-color);">[cancelled, no survived key]</span>
+                      <li>サカキバラUI: Python edition <span style="color: var(--warn-color);"><a href="/assets/bak/CY64-PRJ1-v0-py/CY64-SKKBAUI-PY.7z" download>[cancelled, but backup available]</a></span>
+                    </ul>
+          <div class="dropdown">
+            <button class="wrap1" style="transform:none;">
+              <table width="100%"><tr align="left"><td>
+                サカキバラUI — History (2017-2020)
+              </td><td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" id="dropdwn0-knob" class="dropdown-knob btnknob" width="32pt"></td>
+              </tr></table>
+            </button>
+            <div class="divbtnsw" id="dropdwn0-col" style="height: 0px; opacity: 0; margin-top: 0px; padding: 0px;">
+              <div style="padding: 16px; border-radius: 12px; background: rgba(255,0,0,0.25);">
+                <span style="font-size: 133%;"><u><b>Disclaimer:</b></u></span><br><br>
+                <span style="font-size: 110%; line-height: 12pt;">
+                  Since I wasn't keen on documenting what I was doing back then, some context, and/or information, is speculated. Mistakes are excepted.
+                </span>
+              </div><br>
+              <span style="font-size: 125%;"><u>The beginning</u></span>
+              <p>As soon as I received a Nintendo eShop card to buy SmileBASIC 3, I immediately wanted to make a mock Windows environment.</p>
+              <center>
+                <img src="/assets/images/skkbaui/3ds-os-sbs.jpg" width="200pt" class="bord12 imgshdw" title="Right-click and select 'Open in new tab'" alt="3DS OS by andritolion">
+                <p><sup><a href="https://old.smilebasicsource.com/page?pid=516" target="_blank"><u>3DS OS by andritolion</u></a></sup></p>
+              </center>
+              <span style="line-height: 16pt;">
+                I decided to take an existing project from <a href="https://old.smilebasicsource.com">SmileBASIC Source</a>.
+                This project is
+                <a href="https://old.smilebasicsource.com/user/andritolion">andritolion</a>'s
+                <a href="https://old.smilebasicsource.com/page?pid=516">3DS OS Home Edition</a> and called it <i>Windows 3DS Pro</i>.<br><br>
+                Therefore, the first version, <b>v0.1</b> was created. However, I haven't made it public at this point.
+                Then, I improved the code and added the command prompt.<br>
+                <b>v0.2</b> and the SmileBASIC Source page were publically released on December 27th 2017.<br>
+                3-4 months later, andritolion, the creator of <i>3DS OS</i>, threatened me by filing a DMCA takedown notice. See the below screenshot.<br><br>
+              </span>
+              <center>
+                <img src="/assets/images/skkbaui/sbs-andrew-dmca.png" width="256px" class="bord4 imgshdw" title="Right-click and select 'Open in new tab'" alt="3DS OS by andritolion">
+                <p><sup><a href="https://old.smilebasicsource.com/page?pid=1030&page=2" target="_blank"><u>andritolion threatening to file the takedown</u></a></sup></p>
+              </center>
+              <span style="line-height: 16pt;">
+                Obviously, this was an illegit takedown. SmileBASIC projects cannot be licensed, so anyone can share and modify it,
+                including reuploads, like I did: I forked his project to start making mine.
+                <br><br>
+                Then, in 2019, with the version <b>0.3.2</b> I was thinking about the name again, figured it could be dangerous, as it does kinda imply that it's an
+                official thing, even though it obviously wasn't. At that point, it was named <b>Windows6Mix</b>.<br><br>
+                I didn't really get that far with the crummy code, based on 3DS OS and I wanted to make reset the entire
+                project and start with a different base that easily allows multi-tasking.<br>
+                That's where
+                <a href="https://old.smilebasicsource.com/page?pid=1213" target="_blank">ミドリOS by Autz64 (Old SBS</a>
+                / <a href="https://smilebasicsource.com/?p=page-2359" target="_blank">SBS)</a>, comes into play.<br><br>
+                When Autz64 released Midori OS in beta, I was impressed and asked him for
+                permission to use the beta as a base.
+                <span style="color: var(--sidenote-color);">Although I could've just
+                taken it, I took extra steps, just to make sure Autz64 wasn't
+                getting pissed at me, like andritolion was, but he accepted
+                rather quickly.</span><br><br>
+                The new base was part of the overall rewrite of the project, which
+                made it public in version <b>0.3.3</b>. I don't know, whether it was
+                coincidence or me unconciously wanting to copy the style but I then
+                renamed the project to <b><i>サカキバラUI.</i></b><br><br>
+                It stayed that way and I added some features to Midori OS under
+                サカキバラUI. First, be it new cursors, new features in the packages
+                or even customizable desktop themes.<br><br>
+                This version <span style="color: var(--sidenote-color);">(released
+                as beta revisions for some reason)</span> introduced other major
+                things, such as language packs, customize th installation with toggles
+                in the setup utility, or even the <i>サカキバラUI Menu</i>.<br>
+                The サカキバラUI Menu was a launcher, designed after the Nintendo DSi
+                Menu, where you can launch programs that aren't supported on the
+                desktop.<br><br>
+                After version <b>0.3.6</b>, which enhanced the keyboard, I was so
+                close to get my hands on a Nintendo Switch and felt I was kinda done for
+                on the 3DS and added a discontinuation note in <b>0.3.7r0</b>, which was a
+                timed window that announced I was discontinuing the 3DS version and the
+                Switch version should have been released on September 2020.<br><br>
+                On the 3DS front, nothing really happened, ever since. I just left it
+                counting the days until it's officially dead. Kinda dark, isn't it?
+              </span>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="wrap1" style="transform:none;">
+              <table width="100%"><tr align="left"><td>
+                About サカキバラUI: Switch version (July 2020 - October 2020)
+              </td><td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" id="dropdwn0-knob" class="dropdown-knob btnknob" width="32pt"></td>
+              </tr></table>
+            </button>
+            <div class="divbtnsw" id="dropdwn0-col" style="height: 0px; opacity: 0; margin-top: 0px; padding: 0px;">
+              <span>
+                Being short and sweet, it was a disaster.<br><br>
+                I rushed the first version within 4 days that I had got
+                my Nintendo Switch. <br><br>
+                <a href="https://twitter.com/CyberYoshi64/status/1321553664075595777?s=20" target="_blank">It didn't last very long, at all.</a>
+                Yes, it got killed within 4 months, due to the heavy mental pressure
+                I had at the time from school.<br><br>
+                I was so in distress, I wiped my save file on the Switch (and disabled
+                cloud backup) so I don't have a backup of it anymore.<br>
+                However, you can still get back to my Twitter profile and scroll all
+                the way back to the timeframe and see the little progress I had before
+                ultimately terminating it.
+              </span>
+            </div>
+          </div>
+          <p></p><br></pad>
+      </div>
+      <div id="sidebar"></div>
+      <div id="header"></div>
+    </div>
+    <script src="/index.js"></script>
+  </body>
+</html>

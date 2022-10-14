@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="CyberYoshi64,CY64">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon16.png" type="image/png">
+    <link href="/index.css" rel="stylesheet">
+    
+    <meta name="og:site_name" content="CyberYoshi64's website">
+    <meta name="theme-color" content="#00E868" data-react-helmet="true">
+    <meta name="description" content="CyberYoshi64's website — Learn more about his projects">
+    <title>HOME - サイバーヨッシー64</title>
+  </head>
+  <body>
+    <div id="pageContainer">
+      <div id="pagecontent">
+        <pad>
+          <h1 align="center">Welcome</h1>
+          <table width="100%" style="padding: 8pt; border-radius: 16pt; background: rgba(0,0,0,0.25);">
+            <tr><td>
+            <span>
+              I'm a
+              <span id="cy64-yrcnt" class="bord4" style="color: #FFFFFF80; background: #000;">
+                unknown
+              </span>-year
+              old saxon enjoying to program in my free time.<br>
+              Below are links to detailed pages about my projects.
+            </span>
+            </td><td width="8pt">
+            </td><td width="30%">
+            <div align="center"><a href="about.html">
+              <button>More information about me</button>
+            </a></div>
+            </td></tr>
+          </table><br>
+          <div class="dropdown" style="padding: 8pt; border-radius: 16pt; background: rgba(0,0,0,0.25);">
+            <button class="wrap1" style="transform:none;">
+              <table width="100%"><tr align="left">
+                <td width="44pt" align="center">
+                  <img src="/assets/images/prjicsp_skkbaui.png" width="16pt" title="サカキバラUI for Nintendo 3DS">
+                  <img src="/assets/images/prjicsp_cymos.png" width="16pt" title="CYMOS for Nintendo Switch">
+                  <img src="/assets/images/prjicsp_sb3ds.png" width="16pt" title="SmileBASIC Download Station">
+                </td>
+                <td>
+                  SmileBASIC projects
+                </td>
+                <td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" class="dropdown-knob btnknob" width="32pt"></td>
+              </tr></table>
+            </button>
+            <div class="divbtnsw" style="height: 0pt; opacity: 0; margin-top: 0pt; padding: 0pt;">
+              <a href="/prj/sb/cymos"><button class="wrapn0">
+                <table width="100%"><tr align="left">
+                  <td width="40pt">
+                    <img src="/assets/images/prjicsp_skkbaui.png" width="32pt">
+                  </td>
+                  <td>
+                    サカキバラUI/CYMOS - mock Windows OS
+                  </td>
+                  <td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" width="24pt"></td>
+                </tr></table>
+              </button></a>
+              <a href="/prj/sb/cygmos"><button class="wrapn0">
+                <table width="100%"><tr align="left">
+                  <td width="40pt">
+                    <img src="/assets/images/prjicsp_cymos.png" width="32pt">
+                  </td>
+                  <td>
+                    CYGMOS2 — Enhanced project launcher
+                  </td>
+                  <td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" width="24pt"></td>
+                </tr></table>
+              </button></a>
+              <a href="prj/sb/sb3pm"><button class="wrapn0">
+                <table width="100%"><tr align="left">
+                  <td width="40pt">
+                    <img src="/assets/images/prjicsp_sb3ds.png" width="32pt">
+                  </td>
+                  <td>
+                    SmileBASIC Project Manager
+                  </td>
+                  <td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" width="24pt"></td>
+                </tr></table>
+              </button></a>
+              <a href="assets/temp/PTC file formats.pdf"><button class="wrapn0">
+                <table width="100%"><tr align="left">
+                  <td>
+                    (PDF) SmileBASIC File Formats
+                  </td>
+                  <td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" width="24pt"></td>
+                </tr></table>
+              </button></a>
+            </div>
+          </div><br>
+          
+          <div style="padding: 8pt; border-radius: 16pt; background: rgba(0,0,0,0.25);">
+            <p style="font-size: calc(var(--main-font-sz) + 3pt); margin-left: 12pt;">Some other projects</p>
+            <a href="/prj/pc/ctgp7upd"><button class="wrapn0">
+              <table width="100%"><tr align="left">
+                <td width="40pt">
+                  <img src="/assets/images/prjicsp_ctgp7upd.png" width="32pt">
+                </td>
+                <td>
+                  CY64's CTGP-7 Updater — Python script to update on PC
+                </td>
+                <td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" width="24pt"></td>
+              </tr></table>
+            </button></a>
+          </div>
+
+          <!-- WIP -->
+
+        <p></p><br></pad>
+      </div>
+      <div id="sidebar"></div>
+      <div id="header"></div>
+    </div>
+  </body>
+  <script>
+    /*
+      CY64_insertProperYear()
+      Roughly calculating my age and paste it into the document.
+    */
+    function CY64_insertProperYear() {
+      var x=document.getElementById("cy64-yrcnt")
+      if (x != null) {
+        x.style=""
+        x.innerText=Number.parseInt((Date.now()/31536000000)-34.567123)
+      }
+    }
+    CY64_insertProperYear()
+    window.setInterval(CY64_insertProperYear, 15000)
+  </script>
+  <script src="index.js"></script>
+</html>
