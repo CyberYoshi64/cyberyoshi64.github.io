@@ -11,14 +11,15 @@
 	--link-color: #4BF;
 	--link-bgcolor: #48F3;
 	--header-height: 56pt;
-	--main-font: std, "RodinNTLG2 DB", "Segoe UI", Calibri, sans-serif!important;
+	--main-font: std, fotntlgdb, "Segoe UI", Calibri, sans-serif!important;
+	--header-font: fotntlgeb, std, var(--main-font);
 }
 
 body {
 	margin: 0px;
 	font-size: var(--main-font-sz);
 	font-family: var(--main-font);
-	background: linear-gradient(45deg, #505077 0%, #35394e 100%);
+	background: linear-gradient(135deg, #334 0%, #112 100%);
 	height: 100vh;
 	width: 100vw;
 	scroll-behavior: smooth;
@@ -42,7 +43,7 @@ code {
 	padding: 1pt 2pt;
 	font-size: calc(var(--main-font-sz) - 1pt);
 	color: white;
-	font-family: "Red Hat Mono", std, monospace!important;
+	font-family: "Red Hat Mono", "Hack", monospace, std!important;
 }
 
 code.forptc {
@@ -100,9 +101,9 @@ div.divbtnsw::-webkit-scrollbar-thumb{
 
 }
 
-div {
-	overflow:visible;
-}
+video {border-radius: 8px;}
+
+div {overflow:visible;}
 
 div.addsidebar div#pagecontent {
 	transition: all 250ms;
@@ -129,7 +130,6 @@ div:not(.addsidebar) div#pagecontent {
 	left: 0px;
 	box-shadow: 0px 5pt 10pt black;
 	color: white;
-	background: rgba(32,40,56,1);
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
@@ -184,18 +184,18 @@ table, tr, td, tbody {
 img {-webkit-user-drag: none;}
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: var(--main-font);
+	font-family: var(--header-font);
 	font-weight: bold;
 	margin-block: 0.67em;
 	text-shadow: 0pt 2pt 4pt black;
 }
 
-h1 {font-size: calc(var(--main-font-sz) * 2.5);}
-h2 {font-size: calc(var(--main-font-sz) * 2.175);}
-h3 {font-size: calc(var(--main-font-sz) * 1.875);}
-h4 {font-size: calc(var(--main-font-sz) * 1.625);}
-h5 {font-size: calc(var(--main-font-sz) * 1.4125);}
-h6 {font-size: calc(var(--main-font-sz) * 1.125);}
+h1 {font-size: calc(var(--main-font-sz) * 2.5);    text-decoration: underline;}
+h2 {font-size: calc(var(--main-font-sz) * 2.175);  }
+h3 {font-size: calc(var(--main-font-sz) * 1.875);  }
+h4 {font-size: calc(var(--main-font-sz) * 1.625);  }
+h5 {font-size: calc(var(--main-font-sz) * 1.4125); }
+h6 {font-size: calc(var(--main-font-sz) * 1.125);  }
 
 .clklink-nobtn a, a.clklink-nobtn {
 	transition: all 166ms linear;
@@ -325,6 +325,14 @@ a:active button.insdbar {
 @font-face {
 	font-family: ptc3pgothic;
 	src: url("/assets/fonts/MisakiPGothic.ttf") format("truetype");
+}
+@font-face {
+	font-family: fotntlgdb;
+	src: url("/assets/fonts/RodinNTLG_DB-NoCJK.ttf") format("truetype");
+}
+@font-face {
+	font-family: fotntlgeb;
+	src: url("/assets/fonts/RodinNTLG_EB-NoCJK.ttf") format("truetype");
 }
 
 @media only screen and (max-width: 720px){
