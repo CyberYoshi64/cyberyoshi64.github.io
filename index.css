@@ -11,7 +11,7 @@
 	--link-color: #4BF;
 	--link-bgcolor: #48F3;
 	--header-height: 56pt;
-	--main-font: std, fotntlgdb, "Segoe UI", Calibri, sans-serif!important;
+	--main-font: "Segoe UI", "Microsoft JhengHei", std, fotntlgdb, sans-serif!important;
 	--header-font: fotntlgeb, std, var(--main-font);
 }
 
@@ -96,7 +96,7 @@ div.divbtnsw::-webkit-scrollbar-thumb{
 	width: 100vw;
 	height: var(--header-height);
 	box-shadow: 0px 0px 10pt black;
-	background: rgba(64,96,128,1);
+	background: rgba(64, 96, 128, 0.5);
 	color: white;
 
 }
@@ -153,7 +153,7 @@ pad {
 	display: block;
 	width: calc(100% - 60pt);
 	height: calc(100% - 40pt);
-	padding: 20pt 30pt 20pt 30pt;
+	padding: 20pt 30pt;
 }
 
 pad2 {
@@ -366,4 +366,11 @@ a:active button.insdbar {
 	.rspn_hide {display: none;}
 	.rspn_show {display: initial;}
 
+}
+
+@media only screen and (min-width: 900px){
+	pad {
+		width: 800px;
+		padding: 20pt 0px 20pt calc(50% - 400px);
+	}
 }
