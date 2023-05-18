@@ -20,14 +20,14 @@
             color: white;
             font-family: std, 'MS PGothic', sans-serif!important;
             font-size: 12pt;
-            margin: 5vh 15vw;
+            margin: 10vh 15vw;
         }
         code {
             font-size: 12pt;
             font-family: "Cascadia Mono", "Lucida Console", "MS Gothic", monospace!important;
         }
         table {
-            border-radius: 8px;
+            border-radius: 10pt;
             background: linear-gradient(160deg, #222 0%, #000 100%);
         }
 
@@ -71,12 +71,12 @@
         }
 
         thead td {
-            border-radius: 6px 6px 0px 0px;
+            border-radius: 9pt 9pt 0px 0px;
             height: 28pt;
         }
 
         tfoot td {
-            border-radius: 0px 0px 6px 6px;
+            border-radius: 0px 0px 9pt 9pt;
             height: 28pt;
         }
 
@@ -142,7 +142,7 @@
         }
         .note {color: #0ffa; font-size: 9.5pt;}
 
-        @media only screen and (min-width: 1200px){
+        @media only screen and (min-width: 1150px){
             input {
                 width: 794px;
             }
@@ -154,7 +154,63 @@
                 max-width: 794px;
             }
             body {
-                margin: 5vh calc(50vw - 400px);
+                margin: 15vh calc(50vw - 400px);
+            }
+        }
+        @media only screen and (min-width: 1920px){
+            input {
+                width: 1194px;
+            }
+            table, td {
+                max-width: 1200px;
+            }
+
+            td {
+                max-width: 1194px;
+            }
+            body {
+                margin: 15vh calc(50vw - 600px);
+                font-size: 18pt;
+            }
+            thead td, tfoot td, input {
+                height: 42pt;
+            }
+            thead td {
+                border-radius: 16pt 16pt 0px 0px;
+            }
+
+            tfoot td {
+                border-radius: 0px 0px 16pt 16pt;
+            }
+            table {
+                border-radius: 17pt;
+            }
+            span.plgflgbox {
+                border-radius: 8pt;
+                width: 30pt;
+                height: 30pt;
+                font-size: 15pt;
+                margin: 4pt;
+            }
+            a {
+                border-radius: 10pt;
+                padding: 0pt 8pt;
+            }
+            .note {font-size: 14pt;}
+        }
+        @media only screen and (max-width: 640px){
+            input {
+                width: calc(96vw - 6px);
+            }
+            table, td {
+                max-width: 96vw;
+            }
+
+            td {
+                max-width: calc(96vw - 6px);
+            }
+            body {
+                margin: 5vh 2vw;
             }
         }
     </style>
