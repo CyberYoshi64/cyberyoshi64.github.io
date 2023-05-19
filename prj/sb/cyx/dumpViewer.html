@@ -527,6 +527,7 @@ function load() {
             addLine("Version: "+version)
             addLine("Content type: "+cyxrescue__contentType(type))
             addLine("File count: "+cyxDump.nodeCount)
+            addLineH("<br>Warning:<br>These downloads for the SmileBASIC files are not being verified and thus have to be manually verified by loading the files in SmileBASIC and saving/overwriting them.<br>&nbsp;",["innertd2","warn"])
             addCYXRescueLines()
         }
     } else if (readstring(0,3)!="CY5%"){
