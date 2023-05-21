@@ -104,7 +104,7 @@
         }
         hr {
             border: 0;
-            background: linear-gradient(90deg, #fff0 0%, #ffff 50%, #fff0 100%);
+            background: linear-gradient(90deg, #fff0 0%, #fff4 50%, #fff0 100%);
             height: 4px;
             border-radius: 100%;
         }
@@ -146,6 +146,7 @@
         }
         .note {color: #0ffa; font-size: 9.5pt;}
         .warn {color: #fc0c; font-size: 9.5pt;}
+        .error {color: #f04;}
 
         @media only screen and (min-width: 1150px){
             input {
@@ -238,6 +239,72 @@ var reader = new FileReader;
 var fname = document.getElementById("fileName")
 var table = document.getElementById("tab")
 var cyxDump = {}
+
+CYXCRASH_MAGIC = "CY5%"
+CYXRESCUE_MAGIC = "CYX$DMP0"
+
+var cyxCrashDumpList = {
+    common : {
+        magic       : {offset: 0x00, size: 4, type: "str"},
+        version     : {offset: 0x04, size: 2, type: "uint"},
+        type        : {offset: 0x06, size: 1, type: "uint"},
+        lang        : {offset: 0x07, size: 1, type: "uint"},
+        ptcVer      : {offset: 0x08, size: 4, type: "uint"},
+        pluginVer   : {offset: 0x0C, size: 4, type: "uint"},
+        pluginFlags : {offset: 0x10, size: 4, type: "uint"}
+    },
+    version : {
+        0x0001 : {
+            code : {offset: 0x14, size: 100, type: "str"}
+        },
+        0x8001 : {
+            registers : {
+                pc  : {offset: 0x14, size: 4, type: "uint"},
+                lr  : {offset: 0x18, size: 4, type: "uint"},
+                sp  : {offset: 0x1C, size: 4, type: "uint"},
+                far : {offset: 0x20, size: 4, type: "uint"},
+            },
+            callStack : {
+                size : 6,
+                offset : 0x24,
+                type   : "arr",
+                entry  : {size: 4, type: "uint"} 
+            },
+            programs : {
+                size : 4,
+                offset : 0x3c,
+                type   : "arr",
+                entry  : {size: 15, type: "str"}
+            }
+        },
+        0x8002 : {
+            registers : {
+                pc  : {offset: 0x14, size: 4, type: "uint"},
+                lr  : {offset: 0x18, size: 4, type: "uint"},
+                sp  : {offset: 0x1C, size: 4, type: "uint"},
+                far : {offset: 0x20, size: 4, type: "uint"},
+            },
+            callStack : {
+                offset : 0x24,
+                size : 5,
+                type   : "arr",
+                entry  : {size: 4, type: "uint"} 
+            },
+            programs : {
+                offset : 0x38,
+                size : 4,
+                type   : "arr",
+                entry  : {size: 15, type: "str"}
+            },
+            environment1 : {
+                activeProject  : {offset: 0x74, size: 16, type: "str"},
+                currentProject : {offset: 0x84, size: 16, type: "str"},
+            },
+            apiFlags : {offset: 0x94, size: 4, type: "uint"}
+        },
+    }
+}
+
 clearTable()
 function cyxrescue__newDumpStruct(){
     return {
@@ -261,11 +328,7 @@ function cyxrescue__newDumpStruct(){
     }
 }
 function cyxrescue__contentType(t=0){
-    var aTypes=[
-        "PRG",
-        "CLIP",
-        "GRP"
-    ]
+    var aTypes=[ "PRG", "CLIP", "GRP" ]
     var str = "", sep = " + "
     for (var i=0; i<aTypes.length; i++){
         if (t & (1<<i)){
@@ -308,123 +371,6 @@ function addCYXRescueLines(){
         }
         addLineH("<br>")
     }
-}
-/**
- * Craft a GRP file with the contents provided in the CYX dump
- * 
- * cyxidx    - CYX Dump index of the file to save
- * isfullbuf - Whether to take only the reported length or the entire buffer
-*/
-function saveGRP(cyxidx=-1, isfullbuf=false){
-    if (cyxidx < 0) return
-    var arr = hextoarray("01000100000002001C0008000000000000000000506C73206F76657277726974652100000000506C73206F766572777269746521000000000000000000000000000000000000000000000000000000005043424E303030310300020000020000000200000000000000000000")
-    var arr2 = new Uint8Array(524288)
-    var off = cyxDump[cyxidx].offset
-    var len = 0
-
-    /*
-        SmileBASIC stores the raw GRP 90° CCW and swizzled
-        This below loop looks weird but it works™️
-    */
-
-    for (var y=511; y>=0; y--){
-        for (var x=0; x<512; x++){
-            pxoff = Math.trunc(((((x >> 3) * (512 >> 3) + (y >> 3)) << 6) + ((y & 1) | ((x & 1) << 1) | ((y & 2) << 1) | ((x & 2) << 2) | ((y & 4) << 2) | ((x & 4) << 3))) * 2)
-            arr2[len] = file[off+pxoff]
-            arr2[len+1] = file[off+pxoff+1]
-            len += 2
-        }
-    }
-    var arr3 = hextoarray("5468697320666F6F746572206973207761636B2E")
-
-    off = arr.length
-
-    var out = new Uint8Array(off + 524288 + arr3.length)
-    out.set(arr, 0)
-    out.set(arr2, off)
-    out.set(arr3, off+524288)
-    downloadfile(out, "B"+cyxDump[cyxidx].name.substr(0,14))
-}
-function ucs2toutf8(b=0,b2=0){
-    var a = new Uint8Array(4)
-    if (b <= 0x7f){
-        a[0] = b
-        return a.slice(0,1)
-    } else if (b <= 0x7ff) {
-        a[0]=(0xC0 | (b>>6 & 0x1F))
-        a[1]=(0x80 | (b & 0x3F))
-        return a.slice(0,2)
-    } else {
-        if (0xD800<=b && b<=0xD8FF && 0xDC00<=b2 && b2<=0xDFFF){
-            var c = 0x10000 + ((b & 0x3FF)<<10) + (b2 & 0x3FF)
-            a[0] = 0xF0 | ((c>>18)&0x07)
-            a[1] = 0x80 | ((c>>12)&0x3F)
-            a[2] = 0x80 | ((c>>6)&0x3F)
-            a[3] = 0x80 | (c&0x3F)
-            return a
-        }
-        a[0] = 0xE0 | ((b>>12)&0x0F)
-        a[1] = 0x80 | ((b>>6)&0x3F)
-        a[2] = 0x80 | (b&0x3F)
-        return a.slice(0,3)
-    }
-    return a
-}
-function saveTxt(cyxidx=-1, isfullbuf=false){
-    var arr = hextoarray("0100000000000000000000000000000000000000506C73206F76657277726974652100000000506C73206F76657277726974652100000000000000000000000000000000000000000000000000000000")
-    var off = cyxDump[cyxidx].offset
-    var len = 0
-    if (isfullbuf)
-        len = cyxDump[cyxidx].bufSize
-    else
-        len = cyxDump[cyxidx].dataLen
-    var arr2 = new Uint8Array(len*2+1)
-    var off2 = 0
-    while (len > 1){
-        var arr3 = ucs2toutf8(readnum(off, off+1),readnum(off+2, off+3))
-        for (var i=0; i<arr3.length; i++)
-            arr2[off2+i] = arr3[i]
-        off2 += arr3.length
-        if (arr3.length == 4) {
-            len-=2; off+=2
-        }
-        len-=2; off+=2
-    }
-    arr2[off2]=0xa
-    var arr3 = hextoarray("5468697320666F6F746572206973207761636B2E")
-
-    off = arr.length
-
-    var out = new Uint8Array(off + off2 + arr3.length)
-    out.set(arr, 0)
-    out.set(arr2.slice(0,off2), off)
-    out.set(arr3, off+off2)
-
-    downloadfile(out, "T"+cyxDump[cyxidx].name)
-}
-function cyxrescue__save_conv(index=-1){
-    if (index<0) return
-    var filename = cyxDump[index].name.substr(0,3)
-    if (filename != "GRP")
-        saveTxt(index, false)
-    else
-        saveGRP(index, false)
-}
-function cyxrescue__save_convf(index=-1){
-    if (index<0) return
-    var filename = cyxDump[index].name.substr(0,3)
-    if (filename != "GRP")
-        saveTxt(index, true)
-    else
-        saveGRP(index, true)
-}
-function cyxrescue__save_raw(index=-1){
-    if (index<0) return
-    downloadfile(file.slice(cyxDump[index].offset, cyxDump[index].offset+cyxDump[index].dataLen), "CYX-"+cyxDump[index].name+".bin")
-}
-function cyxrescue__save_rawf(index=-1){
-    if (index<0) return
-    downloadfile(file.slice(cyxDump[index].offset, cyxDump[index].offset+cyxDump[index].bufSize), "CYX-"+cyxDump[index].name+"-full.bin")
 }
 function loadit() {
     reader.readAsArrayBuffer(fileIn.files[0]);
@@ -490,24 +436,28 @@ function clearTable() {
         table.removeChild(table.children[1])
     fname.innerText = "Click here to upload a file"
 }
+function exitLoad(){
+    addLineH("<br>")
+    endLine("Close")
+}
 function load() {
     addLineH("<br>")
-    if (readstring(0,7)=="CYX$DMP0"){
+    if (readstring(0,8)==CYXRESCUE_MAGIC){
         cyxDump = cyxrescue__newDumpStruct()
-        var version = readnum(8,11)
-        var type = readnum(12,13)
-        cyxDump.nodeCount = readnum(14,15)
+        var version = readnum(8,4)
+        var type = readnum(12,2)
+        cyxDump.nodeCount = readnum(14,2)
         var off = 16
         for(var i=0; i<16; i++){
-            cyxDump[i].name = readstring(off,off+23)
+            cyxDump[i].name = readstring(off,24)
             off += 24
         }
         for(var i=0; i<16; i++){
-            cyxDump[i].bufSize = readnum(off,off+3)
+            cyxDump[i].bufSize = readnum(off,4)
             off += 4
         }
         for(var i=0; i<16; i++){
-            cyxDump[i].dataLen = readnum(off,off+3)
+            cyxDump[i].dataLen = readnum(off,4)
             off += 4
         }
         off = 640
@@ -530,60 +480,218 @@ function load() {
             addLineH("<br>Warning:<br>These downloads for the SmileBASIC files are not being verified and thus have to be manually verified by loading the files in SmileBASIC and saving/overwriting them.<br>&nbsp;",["innertd2","warn"])
             addCYXRescueLines()
         }
-    } else if (readstring(0,3)!="CY5%"){
+    } else if (readstring(0,4)!=CYXCRASH_MAGIC){
         addLine("This is not a crash dump.")
     } else {
-        var version = readnum(4,5); // u16
-        var type = readnum(6,6); // u8
-        var lang = readnum(7,7); // u8
-        var ptcverOrig = readnum(8,11); // u32
-        var plgVer = readnum(12,15); // u32
-        var plgFlg = readnum(16,19); // u32
-
-        addLine("Version: "+(version & 0x3FFF))
+        var version = cyxGetValue(cyxCrashDumpList.common.version)
+        var type = cyxGetValue(cyxCrashDumpList.common.type)
+        var lang = cyxGetValue(cyxCrashDumpList.common.lang)
+        var ptcVer = cyxGetValue(cyxCrashDumpList.common.ptcVer)
+        var pluginVer = cyxGetValue(cyxCrashDumpList.common.pluginVer)
+        var pluginFlags = cyxGetValue(cyxCrashDumpList.common.pluginFlags)
+        var dataStruct = cyxCrashDumpList.version[version]
+        if (dataStruct === undefined) {
+            addLine("An error has occured:",["innertd2","warn"])
+            addLine("The version specified in the crash dump is not known.",["innertd2","warn"])
+            addLine("Please contact CyberYoshi64.",["innertd2","warn"])
+            addLineH("<br>Version: "+hex(version, 4),["innertd2","warn"])
+            exitLoad()
+            return
+        }
         addLine("Type: "+excepType(type))
-        addLine("Language: "+parseLang(lang))
-        addLine("Flags:")
-        addPluginFlags(plgFlg)
-        addLine("Plugin version: "+ptcver(plgVer))
-        addLine("SB3 version: "+ptcver(ptcverOrig, lang))
+        addLine("Dump Version: "+hex(version, 4))
+        addLine("PTC Version: "+ptcver(ptcVer, lang))
+        addLine("Plugin Version: "+ptcver(pluginVer))
+        addLine("Plugin Flags:")
+        addPluginFlags(pluginFlags)
 
-        if (version & 0x8000) {
-            // Is not a panic
-            var pc = readnum(20,23); // u32
-            var lr = readnum(24,27); // u32
-            var sp = readnum(28,31); // u32
-            var far = readnum(32,35); // u32
-            var callStackLen = 6; // u32 * 6
-            addLine("Program names:")
-            for (var i=0; i<4; i++){
-                var s = readstring(60+i*15,74+i*15)
-                if (s!="")
-                    addLineH(i+": <code>"+s+"</code>",["innertd2"])
-                else
-                    addLineH(i+": <span class=warn>None</span>",["innertd2"])
-            }
-            addLine("Registers:")
-            addLineH("PC: <code>"+hex(pc,8)+"</code>",["innertd2"])
-            addLineH("LR: <code>"+hex(lr,8)+"</code>",["innertd2"])
-            addLineH("SP: <code>"+hex(sp,8)+"</code>",["innertd2"])
-            addLineH("FAR: <code>"+hex(far,8)+"</code>",["innertd2"])
-            addLine("Call Stack:")
-            for (var i=0; i<callStackLen; i++)
-                addLineH(i+": <code>"+hex(readnum(36+i*4,39+i*4),8)+"</code>",["innertd2"])
-        } else {
-            // Is a panic, returns a string
-            var err = readstring(20,119).trim(); // string[100]
+        if (dataStruct.registers !== undefined){
             addLineH("<hr>")
-            addLine("Error message:")
-            if (err!="")
+            addLine("Registers:")
+            var pc = cyxGetValue(dataStruct.registers.pc)
+            var lr = cyxGetValue(dataStruct.registers.lr)
+            var sp = cyxGetValue(dataStruct.registers.sp)
+            var far = cyxGetValue(dataStruct.registers.far)
+            addLineH("PC: <code>"+hex(pc, 8)+"</code>",["innertd2"])
+            addLineH("LR: <code>"+hex(lr, 8)+"</code>",["innertd2"])
+            addLineH("SP: <code>"+hex(sp, 8)+"</code>",["innertd2"])
+            addLineH("FAR: <code>"+hex(far, 8)+"</code>",["innertd2"])
+        }
+        if (dataStruct.callStack !== undefined){
+            addLineH("<hr>")
+            addLine("Call Stack:")
+            var arr = cyxGetValue(dataStruct.callStack)
+            if (arr === undefined || arr.length === undefined){
+                addLineH("An error occured while parsing the call stack.",["innertd2","error"])
+            } else {
+                for (var i=0; i < arr.length; i++)
+                    addLineH((i+1)+": <code>"+hex(arr[i], 8)+"</code>",["innertd2"])
+            }
+        }
+        if (dataStruct.programs !== undefined){
+            addLineH("<hr>")
+            addLine("Program Slots:")
+            var arr = cyxGetValue(dataStruct.programs)
+            if (arr === undefined || arr.length === undefined){
+                addLineH("An error occured while parsing the program slot names.",["innertd2","error"])
+            } else {
+                for (var i=0; i < arr.length; i++)
+                    addLine((i+1)+": "+arr[i],["innertd2"])
+            }
+        }
+        if (dataStruct.environment1 !== undefined){
+            addLineH("<hr>")
+            addLine("Environment batch #1:")
+            var actPrj = cyxGetValue(dataStruct.environment1.activeProject)
+            var curPrj = cyxGetValue(dataStruct.environment1.currentProject)
+            addLine("Active Project: "+actPrj,["innertd2"])
+            addLine("Running from: "+curPrj,["innertd2"])
+        }
+        if (dataStruct.apiFlags !== undefined){
+            addLineH("<hr>")
+            addLine("CYX API Permissions:")
+            debugger
+            var apiFlags = cyxGetValue(dataStruct.apiFlags)
+            addAPIFlags(apiFlags)
+        }
+        if (dataStruct.code !== undefined){
+            addLineH("<hr>")
+            addLine("Exception Message:")
+            err = cyxGetValue(dataStruct.code)
+            if (err!="") {
                 addLineH("<code>"+err+"</code>",["innertd2"])
-            else 
-                addLineH("<span class=\"warn\">Looks like the error string has been truncated.<br>The crash dump may have been modified. Take these results with a grain of salt!</span>",["innertd2"])
+            } else {
+                addLineH("Looks like the error string has been truncated.",["innertd2","warn"])
+                addLineH("The crash dump may have been modified. Take these results with a grain of salt!",["innertd2","warn"])
+            }
         }
     }
-    addLineH("<br>")
-    endLine("Close")
+    exitLoad()
+}
+function cyxGetValue(obj){
+    var type = obj.type, len = obj.size, off = obj.offset
+    if (type == undefined || len == undefined || off == undefined) return
+    if (type == "uint"){
+        return readnum(off, len)
+    } else if (type == "int") {
+        return readnum(off, len) & (Math.pow(2,len*8)-1)
+    } else if (type == "dbl") {
+        var buf=new ArrayBuffer(8)
+        var int=new Uint32Array(buf), dbl=new Float64Array(buf)
+        int[0]=readnum(off, 4); int[1]=readnum(off + 4, 4)
+        return dbl[0]
+    } else if (type == "str") {
+        return readstring(off, len)
+    } else if (type == "arr") {
+        var arr = [], entlen = obj.entry.size, enttype = obj.entry.type
+        for (var i=0; i<len; i++){
+            arr.push(cyxGetValue({offset: off, size: entlen, type: enttype}))
+            off += entlen
+        }
+        return arr
+    }
+}
+function saveGRP(cyxidx=-1, isfullbuf=false){
+    if (cyxidx < 0) return
+    var arr = hextoarray("01000100000002001C0008000000000000000000506C73206F76657277726974652100000000506C73206F766572777269746521000000000000000000000000000000000000000000000000000000005043424E303030310300020000020000000200000000000000000000")
+    var arr2 = new Uint8Array(524288)
+    var off = cyxDump[cyxidx].offset
+    var len = 0
+
+    //  SmileBASIC stores the raw GRP 90° CCW and swizzled
+    //  This below loop looks weird but it works™️
+    for (var y=511; y>=0; y--){
+        for (var x=0; x<512; x++){
+            pxoff = Math.trunc(((((x >> 3) * (512 >> 3) + (y >> 3)) << 6) + ((y & 1) | ((x & 1) << 1) | ((y & 2) << 1) | ((x & 2) << 2) | ((y & 4) << 2) | ((x & 4) << 3))) * 2)
+            arr2[len] = file[off+pxoff]; arr2[len+1] = file[off+pxoff+1]
+            len += 2
+        }
+    }
+    var arr3 = hextoarray("5468697320666F6F746572206973207761636B2E")
+    off = arr.length
+    var out = new Uint8Array(off + 524288 + arr3.length)
+    out.set(arr, 0)
+    out.set(arr2, off)
+    out.set(arr3, off+524288)
+    downloadfile(out, "B"+cyxDump[cyxidx].name.substr(0,14))
+}
+function ucs2toutf8(b=0,b2=0){
+    var a = new Uint8Array(4)
+    if (b <= 0x7f){
+        a[0] = b
+        return a.slice(0,1)
+    } else if (b <= 0x7ff) {
+        a[0]=(0xC0 | (b>>6 & 0x1F))
+        a[1]=(0x80 | (b & 0x3F))
+        return a.slice(0,2)
+    } else {
+        if (0xD800<=b && b<=0xD8FF && 0xDC00<=b2 && b2<=0xDFFF){
+            var c = 0x10000 + ((b & 0x3FF)<<10) + (b2 & 0x3FF)
+            a[0] = 0xF0 | ((c>>18)&0x07)
+            a[1] = 0x80 | ((c>>12)&0x3F)
+            a[2] = 0x80 | ((c>>6)&0x3F)
+            a[3] = 0x80 | (c&0x3F)
+            return a
+        }
+        a[0] = 0xE0 | ((b>>12)&0x0F)
+        a[1] = 0x80 | ((b>>6)&0x3F)
+        a[2] = 0x80 | (b&0x3F)
+        return a.slice(0,3)
+    }
+    return a
+}
+function saveTxt(cyxidx=-1, isfullbuf=false){
+    var arr = hextoarray("0100000000000000000000000000000000000000506C73206F76657277726974652100000000506C73206F76657277726974652100000000000000000000000000000000000000000000000000000000")
+    var off = cyxDump[cyxidx].offset
+    var len = 0
+    if (isfullbuf)
+        len = cyxDump[cyxidx].bufSize
+    else
+        len = cyxDump[cyxidx].dataLen
+    var arr2 = new Uint8Array(len*2+1)
+    var off2 = 0
+    while (len > 1){
+        var arr3 = ucs2toutf8(readnum(off, off+1),readnum(off+2, off+3))
+        for (var i=0; i<arr3.length; i++)
+            arr2[off2+i] = arr3[i]
+        off2 += arr3.length
+        if (arr3.length == 4) {
+            len-=2; off+=2
+        }
+        len-=2; off+=2
+    }
+    arr2[off2]=0xa
+    var arr3 = hextoarray("5468697320666F6F746572206973207761636B2E")
+    off = arr.length
+    var out = new Uint8Array(off + off2 + arr3.length)
+    out.set(arr, 0)
+    out.set(arr2.slice(0,off2), off)
+    out.set(arr3, off+off2)
+    downloadfile(out, "T"+cyxDump[cyxidx].name)
+}
+function cyxrescue__save_conv(index=-1){
+    if (index<0) return
+    var filename = cyxDump[index].name.substr(0,3)
+    if (filename != "GRP")
+        saveTxt(index, false)
+    else
+        saveGRP(index, false)
+}
+function cyxrescue__save_convf(index=-1){
+    if (index<0) return
+    var filename = cyxDump[index].name.substr(0,3)
+    if (filename != "GRP")
+        saveTxt(index, true)
+    else
+        saveGRP(index, true)
+}
+function cyxrescue__save_raw(index=-1){
+    if (index<0) return
+    downloadfile(file.slice(cyxDump[index].offset, cyxDump[index].offset+cyxDump[index].dataLen), "CYX-"+cyxDump[index].name+".bin")
+}
+function cyxrescue__save_rawf(index=-1){
+    if (index<0) return
+    downloadfile(file.slice(cyxDump[index].offset, cyxDump[index].offset+cyxDump[index].bufSize), "CYX-"+cyxDump[index].name+"-full.bin")
 }
 function hex(n=0,d=2){
     return "0x"+string_rjust(n.toString(16).toUpperCase(),d,0)
@@ -657,6 +765,75 @@ function addPluginFlags(f=0){
     __tr.appendChild(__td)
     table.appendChild(__tr)
 }
+function addAPIFlags(f=0){
+    var aFlags = {
+         0: ["Sys", 0, "The current project can access basic system information, i.e. system language and region"],
+         1: ["FW", 1, "The current project can access the firmware version information."],
+         2: ["HW", 0, "The current project can access hardware data, i.e. 3D slider state, headset state and Wi-Fi strength."],
+         3: ["-", 9, ""],
+         4: ["-", 9, ""],
+         5: ["-", 9, ""],
+         6: ["-", 9, ""],
+         7: ["-", 9, ""],
+         8: ["-", 9, ""],
+         9: ["-", 9, ""],
+        10: ["-", 9, ""],
+        11: ["-", 9, ""],
+        12: ["-", 9, ""],
+        13: ["-", 9, ""],
+        14: ["-", 9, ""],
+        15: ["-", 9, ""],
+        16: ["Sf", 0, "The current project has access to its own folder on the SD Card."],
+        17: ["xR", 1, "The current project can read files and folders from other projects."],
+        18: ["tR", 2, "The current project can read the plugin's top folder."],
+        19: ["sR", 2, "The current project can read any file from the SD Card."],
+        20: ["xW", 2, "The current project can create for and modify data from other projects."],
+        21: ["tW", 3, "The current project can write to the plugin's top folder."],
+        22: ["sW", 4, "The current project can create and modify files on the whole SD Card."],
+        23: ["-", 9, ""],
+        24: ["-", 9, ""],
+        25: ["-", 9, ""],
+        26: ["-", 9, ""],
+        27: ["-", 9, ""],
+        28: ["-", 9, ""],
+        29: ["-", 9, ""],
+        30: ["", 9, ""],
+        31: ["", 9, ""]
+    }
+    if (f == 0){
+        var __tr = document.createElement("tr")
+        var __td = document.createElement("td")
+        __td.classList.add("innertd2")
+        var _sp = document.createElement("span")
+        _sp.classList.add("note")
+        _sp.innerText="No flags were set."
+        __td.appendChild(_sp)
+        __tr.appendChild(__td)
+        table.appendChild(__tr)
+    }
+    var __tr = document.createElement("tr")
+    var __td = document.createElement("td")
+    __td.classList.add("innertd2")
+    for (var i=0; i<32; i++){
+        if (f & (1<<i)){
+            var _sp = document.createElement("span")
+            _sp.classList.add("plgflgbox")
+            _sp.classList.add("plgflgsev"+aFlags[i][1])
+            var _sptext = document.createElement("span")
+            _sptext.classList.add("plgflgboxtc")
+            _sptext.innerText = aFlags[i][0]
+            _sp.appendChild(_sptext)
+            if (aFlags[i][2]==""){
+                _sp.title = "This flag is either not known or the crash dump was modified. Take the results with a grain of salt!"
+            } else {
+                _sp.title = aFlags[i][2]
+            }
+            __td.appendChild(_sp)
+        }
+    }
+    __tr.appendChild(__td)
+    table.appendChild(__tr)
+}
 function excepType(type=0){
     var aTypes = [
         "Prefetch Abort",
@@ -693,10 +870,8 @@ function ptcver(num=0, lng=-1){
     if (lng>=0){
         var lng = (lng >> 4)&15
         var tReg = ["[BAD] ","JPN ","USA ","EUR "]
-        if (lng >= tReg.length)
-            s += "UNK "
-        else
-            s += tReg[lng]
+        if (lng >= tReg.length) s += "UNK "
+        else s += tReg[lng]
     }
     s +=
         ((num>>24)&255)+"."+
@@ -706,50 +881,41 @@ function ptcver(num=0, lng=-1){
     return s
 }
 function downloadfile(file,n){
-	var z = new Blob([file], {"type":"octet/stream"});
-	document.getElementById("dl").href=URL.createObjectURL(z);
-	document.getElementById("dl").download=n;
+	var z = new Blob([file], {"type":"octet/stream"})
+	document.getElementById("dl").href=URL.createObjectURL(z)
+	document.getElementById("dl").download=n
 	if(!!navigator.msSaveBlob){
-		navigator.msSaveBlob(z, n);
+		navigator.msSaveBlob(z, n)
 		return;
 	}
-	document.getElementById("dl").click();
+	document.getElementById("dl").click()
 }
 function string_rjust(s, l=0, p=" "){
-    while (s.length < l)
-        s = p+s
+    while (s.length < l) s = p+s
     return s
 }
 function hexs(st){
-	return "0123456789ABCDEF".indexOf(st);
+	return "0123456789ABCDEF".indexOf(st)
 }
 function hextoarray(s){
     var arr = new Uint8Array(s.length/2)
 	for(var i=0;i<(s.length-1)/2;i++){
-		arr[i] = hexs(s[i*2])<<4 | hexs(s[i*2+1]);
+		arr[i] = hexs(s[i*2])<<4 | hexs(s[i*2+1])
 	}
     return arr
 }
-function readnum(start,end){
-	var number=0;
-	for(var i=start;i<=end;i++){
-		number+=Math.pow(256,(i-start))*file[i];
+function readnum(start,len){
+	var number=0, end=start+len
+	for(var i=start; i<end; i++){
+		number += Math.pow(256,(i-start))*file[i]
 	}
 	return number;
 }
-function insertnum(num,length,pos){
-	for(var i=0;i<length;i++){
-		file[i+pos]=(num & 255);
-		num=(num-(num & 255))/256;
-	}
-}
-function readstring(start,end){
-	var stri="";
-	for(var i=start;i<=end;i++){
-		if(file[i]!=0)
-            stri=stri+String.fromCharCode(file[i]);
-        else
-            break
+function readstring(start,len){
+	var stri="", end=start+len
+	for(var i=start; i<end; i++){
+		if(file[i]!=0) stri += String.fromCharCode(file[i])
+        else break
 	}
 	return stri;
 }
