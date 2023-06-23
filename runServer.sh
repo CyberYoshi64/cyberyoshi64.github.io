@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sudo php -S localhost:80
+sudo php73 -S localhost:80
