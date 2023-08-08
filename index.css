@@ -13,6 +13,7 @@
 	--header-height: 56pt;
 	--main-font: "Segoe UI", "Microsoft JhengHei", std, fotntlgdb, sans-serif!important;
 	--header-font: fotntlgeb, std, var(--main-font);
+	--dividerline-strength: 4pt;
 }
 
 body {
@@ -62,7 +63,9 @@ img {
 	max-height: 100%;
 }
 
-a {text-decoration: none; color: unset;}
+a {text-decoration: none; color: inherit;}
+a.classic {text-decoration: none; color: var(--link-color);}
+a.classic:hover {text-decoration: underline;}
 
 ::-webkit-scrollbar{
 	background-color: rgba(0,0,0,.125);
@@ -152,8 +155,8 @@ div.addsidebar div#sidebar {
 pad {
 	display: block;
 	width: calc(100% - 60pt);
-	height: calc(100% - 40pt);
 	padding: 20pt 30pt;
+	padding-bottom: 15vh;
 }
 
 pad2 {
@@ -178,7 +181,10 @@ table, tr, td, tbody {
 	padding: 0px;
 	border: none;
 	border-spacing: 0px;
-
+}
+table.tabpad, .tabpad td, td.tabpad {
+	padding: 2pt;
+	border: none;
 }
 
 img {-webkit-user-drag: none;}
@@ -311,7 +317,16 @@ a:active button.insdbar {
 	color: #000;
 	transform: scale(0.9125);
 }
-
+.hr {
+	background: radial-gradient(#fff8, transparent 66%);
+	height: var(--dividerline-strength);
+	padding: 0;
+}
+.vr {
+	background: radial-gradient(#fff8, transparent 66%);
+	width: var(--dividerline-strength);
+	padding: 0;
+}
 .rspn_show {display: none;}
 
 @font-face {
@@ -372,5 +387,6 @@ a:active button.insdbar {
 	pad {
 		width: 800px;
 		padding: 20pt 0px 20pt calc(50% - 400px);
+		padding-bottom: 10vh;
 	}
 }
