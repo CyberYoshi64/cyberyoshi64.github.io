@@ -1,4 +1,5 @@
 var dropdownlist=document.getElementsByClassName("dropdown")
+function iff(con, notmet, met){if (con){return met} else {return notmet}}
 
 for (var i = 0; i < dropdownlist.length; i++){
     if (dropdownlist[i].children.length != 2) {
@@ -33,10 +34,9 @@ for (var i = 0; i < dropdownlist.length; i++){
 
 var headerDiv = document.getElementById("header")
 if (headerDiv != null) {
-    headerDiv.innerHTML = 
-    `<a href="/"><img src="/assets/images/cyic_bubble.png" title="To the homepage" style="position: absolute; width: 40pt; height: 40pt; left: 8pt; top: calc(50% - 20pt);"></a>
-    <img src="/assets/images/menubtn.png" title="Site navigator not implemented." style="position: absolute; width: 40pt; height: 40pt; right: 8pt; top: calc(50% - 20pt); filter: opacity(0.25); transform: scale(0.5);">
+    headerDiv.innerHTML = `
+    <a id="headerLogo" href="/" title="To the homepage"></a>
+    <div id="headerLogo2" class="rspn_hide"></div>
+    <div id="headerNav" class="disabled"></div>
     `
 }
-
-function iff(con, notmet, met){if (con){return met} else {return notmet}}

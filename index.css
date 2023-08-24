@@ -20,11 +20,10 @@ body {
 	margin: 0px;
 	font-size: var(--main-font-sz);
 	font-family: var(--main-font);
-	background: linear-gradient(135deg, #334 0%, #112 100%);
-	height: 100vh;
+	background: #182030;
 	width: 100vw;
 	scroll-behavior: smooth;
-	overflow: hidden;
+	overflow-x: hidden;
 	user-select: none;
 	overflow-wrap: break-word;
 }
@@ -89,19 +88,48 @@ div.divbtnsw::-webkit-scrollbar-thumb{
 }
 
 #pageContainer {
-	position: absolute;
-	transition: all 500ms;
+	user-select: text;
 }
 
 #header {
-	position:absolute;
+	position: sticky;
+	backdrop-filter: blur(6pt);
+	top: 0;
 	overflow: hidden;
 	width: 100vw;
 	height: var(--header-height);
-	box-shadow: 0px 0px 10pt black;
-	background: rgba(64, 96, 128, 0.5);
+	height: 56pt;
+	box-shadow: 0px 3px 20pt black;
+	background-color: rgba(24, 56, 80, 0.7125);
 	color: white;
+	transition: background-color 500ms;
+	z-index: 2;
+}
 
+#headerLogo {
+	position: absolute;
+	width: 40pt; height: 40pt;
+	background-image: url(/assets/images/cyic_bubble.png);
+	background-size: 40pt 40pt;
+	left: 8pt; top: calc(var(--header-height) / 2 - 20pt);
+}
+#headerLogo2 {
+	position: absolute;
+	width: 192px; height: 32px;
+	background-image: url(/assets/images/cy64ic11.png);
+	background-size: 192px 32px;
+	left: 56pt; top: calc(var(--header-height) / 2 - 16px);
+}
+#headerNav {
+	position: absolute;
+	width: 40pt; height: 40pt;
+	background-image: url(/assets/images/menubtn.png);
+	background-size: 40pt 40pt;
+	right: 8pt; top: calc(var(--header-height) / 2 - 20pt);
+}
+
+#headerNav.disabled {
+	filter: opacity(0.25); transform: scale(0.5);
 }
 
 video {border-radius: 8px;}
@@ -111,30 +139,20 @@ div {overflow:visible;}
 div.addsidebar div#pagecontent {
 	transition: all 250ms;
 	margin: 0px;
-	position: absolute;
 	width: calc(100vw - 200pt);
-	height: calc(100vh - var(--header-height));
-	top: var(--header-height);
 	left: 200pt;
-	box-shadow: 0px 5pt 10pt black;
 	color: white;
 	background: rgba(32,40,56,1);
 	overflow-x: hidden;
-	overflow-y: scroll;
 }
 
 div:not(.addsidebar) div#pagecontent {
 	transition: all 250ms;
 	margin: 0px;
-	position: absolute;
 	width: 100vw;
-	height: calc(100vh - var(--header-height));
-	top: var(--header-height);
 	left: 0px;
-	box-shadow: 0px 5pt 10pt black;
 	color: white;
 	overflow-x: hidden;
-	overflow-y: scroll;
 }
 
 div.addsidebar div#sidebar {
@@ -230,13 +248,13 @@ div.divbtnsw {
 	overflow-x:clip;
 	overflow-y:scroll;
 	transition: all 750ms cubic-bezier(0.6, -0.66, 0.4, 1.5);
-	padding: 8pt; border-radius: 12pt; background: rgba(52, 105, 158, 0.25);
+	padding: 6pt; border-radius: 12pt; background: rgba(52, 105, 158, 0.25);
 }
 
 div#pagecontent * button {
 	border: none;
 	border-radius: 12pt;
-	padding: 8pt;
+	padding: 6pt;
 	margin: 2pt -2pt;
 	transition: all 250ms;
 	background: rgba(255, 255, 255, 0.25);
@@ -355,30 +373,19 @@ a:active button.insdbar {
 		--main-font-sz: 10.5pt;
 		--header-height: 48pt;
 	}
+	#header {
+		height: var(--header-height);
+		height: 48pt;
+		background-color: rgb(24, 56, 80);
+	}
 	div.addsidebar div#pagecontent {
 		margin: 0px;
-		position: absolute;
-		width: 100vw;
-		left: 0px;
-		box-shadow: 0px 5pt 10pt black;
-		color: white;
-		background: rgba(32,40,56,1);
-		overflow-x: hidden;
-		overflow-y: scroll;
 	}
 
 	div.addsidebar div#sidebar {
 		margin: 0px;
-		position: absolute;
-		width: 200pt;
-		left: -500pt;
-		box-shadow: 0px 5pt 10pt black;
-		color:white;
-		background: rgba(48,64,96,1);
-		overflow-x: hidden;
-		overflow-y: scroll;
 	}
-	.rspn_hide {display: none;}
+	.rspn_hide {display: none; width: 0; height: 0;}
 	.rspn_show {display: initial;}
 
 }
