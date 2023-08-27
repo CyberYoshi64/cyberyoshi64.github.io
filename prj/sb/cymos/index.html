@@ -20,9 +20,9 @@
     <div id="pageContainer">
       <div id="pagecontent">
         <pad>
-          <h1 align="center">CYMOS (サカキバラUI)</h1>
+          <h1 align="center">CYMOS – CY64 Mock OS</h1>
           <div style="padding: 16px; border-radius: 12px; background: rgb(100,64,0);">
-            <span style="font-size: 133%;"><u><b>Warning:</b></u></span><br><br>
+            <span style="font-size: 133%;"><u><b>Warning:</b></u></span><br>
             <span style="font-size: 110%;">
               This page is currently being reconstructed.
               See the below To-do list for what's planned for this page.
@@ -32,42 +32,31 @@
             <span style="font-size: 133%;"><u><b>To do</b></u></span><br>
             <span style="font-size: 110%;">
               <ul>
-                <li>
-                  Add downloads for all currently backed up versions
-                  <ul>
-                    <li>
-                      For サカキバラUI (3DS) and older CYMOS builds, try reupload them in
-                      SmileBASIC and release public keys, as an alternative
-                      download option
-                    </li>
-                  </ul>
-                </li>
+                <li>Add download links for all currently backed up versions</li>
                 <li>Continue history section for CYMOS</li>
-                <li>Look for other goodies related to CYMOS/サカキバラUI, then disclose them</li>
-                <li>Document サカキバラUI (3DS) development, i.e. a more accurate change log</li>
+                <li>Disclose development goodies leftover for サカキバラUI and CYMOS</li>
               </ul>
             </span>
           </div><br>
-          <p style="font-size: 150%;">サカキバラUI and CYMOS are a mock operating systems designed for SmileBASIC.</p>
-            <p>This project was started December 26th, 2017.</p>
-            <p>It was later discontinued and restarted from scratch under the name "CYMOS" — CY64 Mock OS.</p>
-            <p>There were the following versions:</p>
-            <ul>
-              <li>サカキバラUI (3DS)</li>
-              <li>サカキバラUI: Nintendo Switch Edition</li>
-              <li>
-                サカキバラUI: Python Edition
-                <ul>
-                  <li style="color: var(--warn-color);">
-                    There's not much information available about this version.
-                    The last surviving copy is dated 16/10/2021 and 17/6/2022
-                    for assets and the main program respectively. It's speculated
-                    the actual development time was rather short, estimated at
-                    just 1 month.</li>
-                </ul>
-              </li>
-              <li>CYMOS (for SmileBASIC 3)</li>
-            </ul>
+          <p style="font-size: 150%;">CYMOS (formerly サカキバラUI) is a mock operating system designed for SmileBASIC.</p>
+          <p>This project was started December 26th, 2017.</p>
+          <p>There were the following versions:</p>
+          <ul>
+            <li>サカキバラUI (3DS)</li>
+            <li>サカキバラUI: Nintendo Switch Edition</li>
+            <li>
+              サカキバラUI: Python Edition
+              <ul>
+                <li style="color: var(--warn-color);">
+                  There's not much information available about this version.
+                  The last surviving copy is dated 16/10/2021 and 17/6/2022
+                  for assets and the main program respectively. It's speculated
+                  the actual development time was rather short, estimated at
+                  just 1 month.</li>
+              </ul>
+            </li>
+            <li>CYMOS (for SmileBASIC 3)</li>
+          </ul>
           <div class="dropdown">
             <button class="wrap1" style="transform:none;">
               <table width="100%"><tr align="left"><td>
@@ -144,7 +133,134 @@
               </span>
             </div>
           </div>
-          <br><h2>サカキバラUI: Switch edition — History</h2>
+          <div class="dropdown">
+            <button class="wrap1" style="transform:none;">
+              <table width="100%"><tr align="left"><td>
+                <h4>サカキバラUI (3DS) — Changelog</h4>
+              </td><td width="40pt" align="right"><img src="/assets/images/arrow-right-dark.png" id="dropdwn0-knob" class="dropdown-knob btnknob" width="40pt"></td>
+              </tr></table>
+            </button>
+            <div class="divbtnsw" id="dropdwn0-col" style="height: 0px; opacity: 0; margin-top: 0px; padding: 0px;">
+              <h4>サカキバラUI - 0.3.7r2</h4>
+              <ul>
+                <li>Fixed sound effect list which previously caused the wrong sounds to play</li>
+                <li>Changed discontinuation window to advertise CYMOS instead</li>
+              </ul>
+              <h4>サカキバラUI - 0.3.7r1</h4>
+              <ul>
+                <li>Added BGM test application</li>
+                <li>Added サカキバラUI Menu icon for "Tiny Huge World" by RGamesOfficial</li>
+                <li>Fixed サカキバラUI Menu banner sounds</li>
+                <li>Fixed crash in setup when no package file was found</li>
+                <li>Fixed crash in サカキバラUI Menu Settings when no icon was found</li>
+              </ul>
+              <h4>サカキバラUI - 0.3.7</h4>
+              <h6>Release date: 7/6/2020</h6>
+              <ul>
+                <li>Revised サカキバラUI Setup - although useless as this and future version were not packed on release</li>
+                <li>Added NTRBoot Animation Selector</li>
+                <li>Added discontinuation window to advertise サカキバラUI: Switch Edition</li>
+                <li>Added rudimentary session saving routines</li>
+                <li>Added custom CYFS implementation</li>
+                <li>Updated File Explorer to showcase CYFS</li>
+                <li>Added サカキバラUI DOS to showcase CYFS</li>
+                <li>
+                  Added "SBS title DB test"
+                  <ul>
+                    <li>Displays recommended projects that are currently installed and allow running them within DIRECT mode</li>
+                  </ul>
+                </li>
+                <li>
+                  Added サカキバラUI Menu banners
+                  <ul>
+                    <li>On Old3DS, a moving sine wave is shown instead</li>
+                  </ul>
+                </li>
+              </ul>
+              <h4>サカキバラUI - 0.3.6</h4>
+              <h6>Release date: 27/3/2020</h6>
+              <ul>
+                <li>Updated keyboard to allow Hiragana/Katakana/Symbol input</li>
+                <li>Added desktop theme support</li>
+                <li>Fixed settings regarding crashes when invalid language packs were found</li>
+                <li>Changed "Various settings" to "Experimental settings"</li>
+              </ul>
+              <h4>サカキバラUI - 0.3.5b</h4>
+              <h6>Release date: 7/2/2020</h6>
+              <ul>
+                <li>Added サカキバラUI Menu Settings</li>
+                <li>Updated setup to check existing files on unpack</li>
+                <li>Removed deprecated functions</li>
+              </ul>
+              <h4>サカキバラUI - 0.3.5a</h4>
+              <h6>Release date: 26/1/2020</h6>
+              <ul>
+                <li>Fixed major bugs preventing サカキバラUI from booting</li>
+                <li>Updated サカキバラUI Menu Icon Creator with a GUI</li>
+                <li>Fixed サカキバラUI Menu theme colors</li>
+                <li>Revised icon format to allow transparent icons</li>
+                <li>Fixed setup - changed text-based UI back to GUI</li>
+              </ul>
+              <h4>サカキバラUI - 0.3.5</h4>
+              <h6>Release date: 25/1/2020</h6>
+              <ul>
+                <li>Added サカキバラUI Menu</li>
+                <li>Updated start menu</li>
+                <li>Add development tools into package for nerds</li>
+                <li>Added new keyboard layouts</li>
+                <li>Added task manager à la Windows 9x</li>
+              </ul>
+              <h4>サカキバラUI - 0.3.4</h4>
+              <ul>
+                <li>Updated desk icons to be customizable</li>
+                <li>Replaced start menu (unusable)</li>
+                <li>Added force-quit gesture (pressing X x5)</li>
+              </ul>
+              <h4>Windows6Mix - 0.3.3</h4>
+              <ul>
+                <li>Remade manual application</li>
+                <li>Updated on-screen keyboard</li>
+                <li>Rebased Windows6Mix on Midori OS Beta by Autz64</li>
+                <li>Added language packs and associated tools</li>
+                <li>Updated configurations to be a settings window</li>
+                <li>Added support for transparency effects for window borders</li>
+                <li>Windows6Mix underwent extensive rewrites</li>
+              </ul>
+              <h4>Windows6Mix - 0.3.2</h4>
+              <h6>Release date: 24/2/2018</h6>
+              <ul>
+                <li>Added new functions to library</li>
+                <li>Added exclusivity checks for non-desktop applications</li>
+                <li>Created game collection "GAME.EXE" (using loading technique by Chrismslist)</li>
+                <li>Updated Explorer</li>
+                <li>Removed loading BGM's on startup for faster boot times</li>
+              </ul>
+              <h4>Windows 3DS - 0.3.1</h4>
+              <h6>Release date: 27/1/2018</h6>
+              <ul>
+                <li>Added spritesheets</li>
+                <li>Updated "Exit OS" menu</li>
+              </ul>
+              <h4>Windows 3DS - 0.3</h4>
+              <h6>Release date: ??/1/2018</h6>
+              <ul>
+                <li>Created new library "XCMD.LIB"</li>
+                <li>Logo design was changed to match Windows 10</li>
+                <li>Added custom BGM</li>
+                <li>Added support for theme colors</li>
+                <li>Added localized "Chat Game"</li>
+              </ul>
+              <h4>Windows 3DS - 0.2</h4>
+              <h6>Release date: 27/12/2017</h6>
+              <ul>
+                <li>Using "3DS OS Home" by andritolion as base</li>
+                <li>Fixed various bugs</li>
+                <li>Added new fonts</li>
+                <li>Improved code structure</li>
+              </ul>
+            </div>
+          </div>
+          <br><h2>サカキバラUI: Switch Edition — History</h2>
           <h5>Life span: 24/7/2020 - 28/10/2020 (4 months)</h5>
           <p>Being short and sweet, it was a disaster. I rushed the first version within 4 days that I had got my Nintendo Switch.</p>
           <p>

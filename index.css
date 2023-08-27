@@ -32,6 +32,10 @@ button {
 	font-size: var(--main-font-sz);
 }
 
+ol, ul {
+	margin: 0;
+}
+
 p {
 	margin-block-start: 1em;
 	margin-block-end: 0.5em;
@@ -93,14 +97,14 @@ div.divbtnsw::-webkit-scrollbar-thumb{
 
 #header {
 	position: sticky;
-	backdrop-filter: blur(6pt);
+	backdrop-filter: blur(8px);
 	top: 0;
 	overflow: hidden;
 	width: 100vw;
 	height: var(--header-height);
 	height: 56pt;
 	box-shadow: 0px 3px 20pt black;
-	background-color: rgba(24, 56, 80, 0.7125);
+	background-color: rgba(0, 52, 80, 0.625);
 	color: white;
 	transition: background-color 500ms;
 	z-index: 2;
@@ -220,6 +224,10 @@ h3 {font-size: calc(var(--main-font-sz) * 1.875);  }
 h4 {font-size: calc(var(--main-font-sz) * 1.625);  }
 h5 {font-size: calc(var(--main-font-sz) * 1.4125); }
 h6 {font-size: calc(var(--main-font-sz) * 1.125);  }
+
+div.divbtnsw h3, div.divbtnsw h4, div.divbtnsw h5, div.divbtnsw h6 {
+	margin: 8pt 0 4pt 0;
+}
 
 .clklink-nobtn a, a.clklink-nobtn {
 	transition: all 166ms linear;
