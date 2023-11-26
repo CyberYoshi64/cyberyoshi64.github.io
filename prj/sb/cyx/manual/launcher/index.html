@@ -3,11 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=devce-width, initial-scale=1">
     <title>Manual Concepts</title>
     <style>
+        @font-face {
+            font-family: RodinNTLG;
+            src: url(/assets/fonts/CTRNTLG-DB.ttf);
+        }
         :root {
-            --index-bar-width: 320px;
+            --index-bar-width: 300px;
             --index-bar-off: 0px;
         }
 
@@ -17,46 +21,61 @@
         }
         ::-webkit-scrollbar-thumb {
             border-radius: 100vw;
-            margin: 2px 2px;
             background-color: white;
             min-height: 32px;
         }
-
         body {
             background: rgb(32, 36, 52);
             margin: 0;
-            font-family: "nintendo_NTLG-DB_002", "nintendo_NTLG-DB_001", sans-serif;
             font-size: 14px;
-            overflow-y: hidden;
+        }
+        div#content {
+            max-width: 100vw;
+            max-height: 100vw;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
         }
         body, button {
-            font-family: "nintendo_NTLG-DB_002", "nintendo_NTLG-DB_001", sans-serif;
+            font-family: RodinNTLG, "nintendo_NTLG-DB_002", "nintendo_NTLG-DB_001", sans-serif;
         }
 
         #index {
-            position: absolute;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
             width: var(--index-bar-width);
-            height: 100vh;
+            height: calc(100% - 16pt);
+            padding: 8pt 0pt;
             left: var(--index-bar-off);
-            transition: left 333ms ease-in-out;
+            opacity: 1;
+            transition: all 333ms ease-in-out;
             top: 0px;
-            border-radius: 0px 8pt 8pt 0;
+            border-radius: 0px 12pt 12pt 0;
             background-color: rgba(255, 255, 255, .75);
             backdrop-filter: blur(3pt);
-            box-shadow: 0px 0px 16pt black;
+            box-shadow: 0px 0px 32pt black;
+            overflow: hidden;
+        }
+        #index.hidden {
+            box-shadow: 0px 0px 0pt black;
+            background-color: rgba(255, 255, 255, 1);
+            opacity: 0;
         }
 
         #page {
-            position: absolute;
+            position: fixed;
             display: flex;
             flex-flow: column;
             transition: width 500ms ease-in-out;
-            width: calc(100vw - var(--index-bar-width) - var(--index-bar-off));
-            min-width: 352px;
-            height: 100vh;
-            right: 0px;
+            width: calc(100vw - var(--index-bar-width) - var(--index-bar-off) + 16px);
+            min-width: 336px;
+            max-width: 100vw;
+            height: 100%;
+            right: -16px;
             top: 0px;
             user-select: none;
+            overflow: hidden;
         }
 
         #pageHeader {
@@ -69,6 +88,7 @@
             backdrop-filter: blur(3px);
             top: 0px;
             width: 320px;
+            margin-right: 16px;
             height: 40px;
             border-radius: 0 0 8px 8px;
             box-shadow: 0px 0px 10pt black;
@@ -161,19 +181,23 @@
             position: absolute;
             top: -40px;
             margin-top: 40px;
-            width: 344px;
-            height: 100vh;
+            width: 336px;
+            height: 100%;
             background-color: clear;
             border: none;
             align-self: center;
-            box-shadow: 0px 0px 32pt black;
+            transition: opacity 125ms ease;
+            opacity: 1;
+        }
+        #page iframe.hidden {
+            opacity: 0;
         }
 
         #pageList {
             display: block;
             width: calc(100% - 16pt);
-            height: 100vh;
-            max-height: calc(100vh - 166px);
+            flex-grow: 1;
+            overflow-y: hidden;
             margin: 8pt;
             padding: 0;
             background: #0004;
@@ -181,13 +205,13 @@
         }
 
         #pageList .listcontent {
-            width: 100%;
+            width: calc(100% - 8pt);
             height: calc(100% - 16pt);
             scrollbar-gutter: both-edges stable;
             scrollbar-color: white transparent;
-            overflow-y: scroll;
             overflow-x: hidden;
-            padding: 8pt 0pt;
+            overflow-y: scroll;
+            padding: 8pt 4pt;
         }
 
         #pageList .category {
@@ -264,13 +288,13 @@
             text-shadow: 0px 1pt 1pt rgba(0, 0, 0, .333);
         }
 
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
+        h2, h3, h4, h5, h6 {
             text-align: center;
             text-shadow: 0px .15rem 1pt #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 4pt 0pt;
         }
 
         h2 {
@@ -296,34 +320,36 @@
 </head>
 
 <body>
-    <div id="page">
-        <iframe id="pageframe" src="./pageDummy.html"></iframe>
-        <div id="pageHeader" onclick="toggleIndex()" title="Click here to toggle the index panel.">
-            <div id="currPageCat" class="pageCount">
-                <div id="currPageNum">…</div>
-            </div>
-            <div class="pageLabel">
-                <div id="currPageLabel">Loading…</div>
-            </div>
-        </div>
-    </div>
-    <div id="index">
-        <h1>Manual Concepts</h1>
-        <h3>Table Of Contents</h3>
-        <div id="pageList">
-            <div id="pageListC" class="listcontent">
-                <button type="button" onclick="newPage(0,0)">
-                    <div class="pageCount cat01">
-                        <div>0</div>
-                    </div>
-                    <div class="pageLabel">
-                        Introduction Page
-                    </div>
-                </button>
-                <hr>
+    <div id="content">
+        <div id="page">
+            <iframe id="pageframe"></iframe>
+            <div id="pageHeader" onclick="toggleIndex()" title="Click here to toggle the index panel.">
+                <div id="currPageCat" class="pageCount">
+                    <div id="currPageNum">…</div>
+                </div>
+                <div class="pageLabel">
+                    <div id="currPageLabel">Loading…</div>
+                </div>
             </div>
         </div>
-        <button id="indexToggle" onclick="toggleIndex()">Hide this panel</button>
+        <div id="index">
+            <h1>Manual Concepts</h1>
+            <h4>Table Of Contents</h4>
+            <div id="pageList">
+                <div id="pageListC" class="listcontent">
+                    <button type="button" onclick="newPage(0,0)">
+                        <div class="pageCount cat01">
+                            <div>0</div>
+                        </div>
+                        <div class="pageLabel">
+                            Introduction Page
+                        </div>
+                    </button>
+                    <hr>
+                </div>
+            </div>
+            <button id="indexToggle" onclick="toggleIndex()">Hide this panel</button>
+        </div>
     </div>
     <script>
         pages = [
@@ -336,23 +362,46 @@
             //2: "General Information",
             2: "Credits",
         }
+        firstLoad = 0
         function newPage(num, cat) {
             currPageNum.innerText = num
             currPageCat.classList = ["pageCount cat" + ((cat - 1) % 12 + 1)]
             currPageLabel.innerText = pages[num][0]
-            pageframe.src = pages[num][1]
+            window.setTimeout(function(){
+                pageframe.src = pages[num][1]
+            }, 333)
+            pageframe.classList = "hidden"
         }
 
         function toggleIndex() {
             let rs = document.querySelector(":root")
+            let indiv = document.getElementById("index")
             let is = getComputedStyle(rs).getPropertyValue("--index-bar-width")
             is = Number.parseInt(is.substring(0,is.length-2))
             let i = getComputedStyle(rs).getPropertyValue("--index-bar-off")
             i = Number.parseInt(i.substring(0,i.length-2))
             if (!i) {
                 i = -is
+                indiv.classList = "hidden"
             } else {
                 i = 0
+                indiv.classList = ""
+            }
+            rs.style.setProperty("--index-bar-off", i+"px")
+        }
+        function setIndexToggle(bool) {
+            let rs = document.querySelector(":root")
+            let indiv = document.getElementById("index")
+            let is = getComputedStyle(rs).getPropertyValue("--index-bar-width")
+            is = Number.parseInt(is.substring(0,is.length-2))
+            let i = getComputedStyle(rs).getPropertyValue("--index-bar-off")
+            i = Number.parseInt(i.substring(0,i.length-2))
+            if (bool) {
+                i = -is
+                indiv.classList = "hidden"
+            } else {
+                i = 0
+                indiv.classList = ""
             }
             rs.style.setProperty("--index-bar-off", i+"px")
         }
@@ -387,15 +436,24 @@
                 b1.onclick = function(){newPage(b1.pnum, b1.pcat)}
                 pageListC.append(b1)
             }
-        }
-        if (pages.length < 2) {
-            let d1 = document.createElement("div")
-            d1.classList = "category cat1"
-            let d2 = document.createElement("div")
-            d2.classList = "doWrap"
-            d2.innerText = "There are no pages present.\nCheck again later.";
-            d1.append(d2)
-            pageListC.append(d1)
+            if (pages.length < 2) {
+                let d1 = document.createElement("div")
+                d1.classList = "category cat1"
+                let d2 = document.createElement("div")
+                d2.classList = "doWrap"
+                d2.innerText = "There are no pages present.\nCheck again later.";
+                d1.append(d2)
+                pageListC.append(d1)
+            }
+            pageframe.onload = function(){ // iframe loads in - we don't care about it
+                pageframe.onload = function(){
+                    if (window.visualViewport.width < 640) {
+                        setIndexToggle(firstLoad)
+                    }
+                    firstLoad = 1
+                    pageframe.classList = ""
+                }
+            }
         }
 
         setup();
@@ -403,5 +461,4 @@
 
     </script>
 </body>
-
 </html>

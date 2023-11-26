@@ -1,3 +1,8 @@
+@font-face {
+    font-family: RodinNTLG;
+    src: url(/assets/fonts/CTRNTLG-DB.ttf);
+}
+
 :root {
     --text-largest: 19px;
     --text-large: 17.5px;
@@ -17,13 +22,22 @@
     min-height: 32px;
 }
 
+* {
+    font-family: RodinNTLG, "nintendo_NTLG-DB_001", sans-serif;
+    font-size: inherit;
+    font-optical-sizing: none;
+    font-size-adjust: none;
+    text-size-adjust: none;
+}
+
 html {
-    background: #202840;
-    scrollbar-gutter: both-edges stable;
+    background: rgb(32, 36, 52);
+    scrollbar-gutter: stable;
     scrollbar-color: #4cf #0000;
     overflow-x: hidden;
     padding-top: 40px;
-    padding-left: calc((100% - 320px)/2);
+    padding-bottom: 16px;
+    /*padding-left: calc((100% - 320px)/2);*/
     width: 320px;
     max-width: 320px;
 }
@@ -33,22 +47,21 @@ body {
     box-shadow: 0px -8px 0px var(--background);
     border-radius: 0px 0px 8px 8px;
     color: var(--base-textcolor);
-    margin: 0;
+    margin: 0px;
     padding: 10px 0px;
-    font-family: "nintendo_NTLG-DB_001", sans-serif;
     font-size: var(--text-medium);
     line-height: 1.25;
     word-wrap: break-word;
 }
 
 p {
-    margin: 0;
-    padding: 0 8px;
+    margin: 0px;
+    padding: 0px 8px;
     padding-bottom: 8px;
 }
 table, thead, tbody, tr, td {
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 table {
     margin: 0px 8px;
@@ -56,10 +69,10 @@ table {
     margin-bottom: 8px;
 }
 ul, ol {
-    padding: 0;
+    padding: 0px;
+    margin: 0px;
     padding-left: 32px;
     width: calc(100% - 40px);
-    margin: 0;
     margin-bottom: 8px;
 }
 table * {
@@ -73,8 +86,10 @@ table * {
 .nowrap {
     display: inline-block;
 }
-#end {
+hr {
+    margin: 0px;
     margin-left: 7px;
+    border: none;
     width: calc(100% - 14px);
     height: 2px;
     background-color: rgba(64,64,64,.5);
