@@ -1,0 +1,81 @@
+:root {
+    --text-largest: 19px;
+    --text-large: 17.5px;
+    --text-medium: 16px;
+    --text-small: 14.5px;
+    --text-smallest: 13px;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 100vw;
+    margin: 2px 2px;
+    background-color: #4cf;
+    min-height: 32px;
+}
+
+html {
+    background: #202840;
+    scrollbar-gutter: both-edges stable;
+    scrollbar-color: #4cf #0000;
+    overflow-x: hidden;
+    padding-top: 40px;
+    padding-left: calc((100% - 320px)/2);
+    width: 320px;
+    max-width: 320px;
+}
+
+body {
+    background: var(--background);
+    box-shadow: 0px -8px 0px var(--background);
+    border-radius: 0px 0px 8px 8px;
+    color: var(--base-textcolor);
+    margin: 0;
+    padding: 10px 0px;
+    font-family: "nintendo_NTLG-DB_001", sans-serif;
+    font-size: var(--text-medium);
+    line-height: 1.25;
+    word-wrap: break-word;
+}
+
+p {
+    margin: 0;
+    padding: 0 8px;
+    padding-bottom: 8px;
+}
+table, thead, tbody, tr, td {
+    margin: 0;
+    padding: 0;
+}
+table {
+    margin: 0px 8px;
+    max-width: calc(100% - 16px);
+    margin-bottom: 8px;
+}
+ul, ol {
+    padding: 0;
+    padding-left: 32px;
+    width: calc(100% - 40px);
+    margin: 0;
+    margin-bottom: 8px;
+}
+table * {
+    margin-bottom: 0px;
+}
+.text-largest   {font-size: var(--text-largest);}
+.text-large     {font-size: var(--text-large);}
+.text-medium    {font-size: var(--text-medium);}
+.text-small     {font-size: var(--text-small);}
+.text-smallest  {font-size: var(--text-smallest);}
+.nowrap {
+    display: inline-block;
+}
+#end {
+    margin-left: 7px;
+    width: calc(100% - 14px);
+    height: 2px;
+    background-color: rgba(64,64,64,.5);
+}
