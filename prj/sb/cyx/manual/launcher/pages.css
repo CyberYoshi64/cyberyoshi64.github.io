@@ -28,6 +28,9 @@
     font-optical-sizing: none;
     font-size-adjust: none;
     text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-justify: inter-character;
+    word-break: break-word;
 }
 
 html {
@@ -52,6 +55,10 @@ body {
     font-size: var(--text-medium);
     line-height: 1.25;
     word-wrap: break-word;
+}
+
+img {
+    vertical-align: top;
 }
 
 p {
@@ -83,9 +90,9 @@ table * {
 .text-medium    {font-size: var(--text-medium);}
 .text-small     {font-size: var(--text-small);}
 .text-smallest  {font-size: var(--text-smallest);}
-.nowrap {
-    display: inline-block;
-}
+.nowrap         {display: inline-block;}
+.remark         {color: gray;}
+
 hr {
     margin: 0px;
     margin-left: 7px;
