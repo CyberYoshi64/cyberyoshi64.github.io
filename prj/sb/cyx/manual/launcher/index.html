@@ -13,6 +13,7 @@
         :root {
             --index-bar-width: 300px;
             --index-bar-off: 0px;
+            --pageheader-border-radius: 8px;
         }
 
         ::-webkit-scrollbar {
@@ -54,7 +55,9 @@
             border-radius: 0px 12pt 12pt 0;
             background-color: rgba(255, 255, 255, .75);
             backdrop-filter: blur(3pt);
-            box-shadow: 0px 0px 32pt black;
+            box-shadow:
+                0px 0px 64pt black,
+                0px 0px 64pt black;
             overflow: hidden;
         }
         #index.hidden {
@@ -70,7 +73,7 @@
             transition: width 500ms ease-in-out;
             width: calc(100vw - var(--index-bar-width) - var(--index-bar-off) + 16px);
             min-width: 336px;
-            max-width: 100vw;
+            max-width: calc(100vw + 16px);
             height: 100%;
             right: -16px;
             top: 0px;
@@ -79,9 +82,10 @@
         }
 
         #pageHeader {
-            background-color: rgba(255, 255, 255, .7125);
-            transition: background-color 250ms ease;
+            transition: background-color 250ms ease, border-radius 333ms ease, box-shadow 500ms ease;
             align-self: center;
+            background: linear-gradient(176.6deg, #fff2 0%, #fff8 45%, #fff0 55%, #fff4 100%);
+            background-color: rgba(64, 72, 96, 0.5);
             position: absolute;
             display: flex;
             flex-flow: row;
@@ -90,12 +94,18 @@
             width: 320px;
             margin-right: 16px;
             height: 40px;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0px 0px 10pt black;
+            border-radius: 0 0 var(--pageheader-border-radius) var(--pageheader-border-radius);
+            box-shadow: 0px 0px 12px black;
             vertical-align: baseline;
         }
+        .currPageLabel {
+            padding: 3px;
+        }
         #pageHeader:hover {
-            background-color: rgba(255, 232, 192, .8);
+            background-color: rgba(160, 255, 255, .5);
+        }
+        #pageHeader:active {
+            background-color: rgba(128, 160, 192, .5);
         }
 
         .pageCount {
@@ -163,18 +173,38 @@
             text-align: center;
             width: 28px;
             height: 28px;
-            text-shadow: 0pt 1pt 2pt #000;
+            text-shadow:
+                0pt 0.0pt 0.5pt #000,
+                0pt 0.125pt 1.0pt #000,
+                0pt 0.25pt 1.5pt #000,
+                0pt 0.5pt 2pt #000;
+        }
+
+        #pageHeader .pageCount {
+            box-shadow:
+                0px 0px 4px white,
+                0px 0px 4px white;
         }
 
         .pageLabel div {
             display: table-cell;
             height: 32px;
-            padding: 4px 0pt;
+            padding: 4px 4px;
             vertical-align: middle;
             overflow-x: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 286px;
+            max-width: 278px;
+            text-shadow:
+                -1.5px  1.5px 2px white,
+                 0.0px  2.0px 2px white,
+                 1.5px  1.5px 2px white,
+                -2.0px  0.0px 2px white,
+                 2.0px  0.0px 2px white,
+                -1.5px -1.5px 2px white,
+                 0.0px -2.0px 2px white,
+                 1.5px -1.5px 2px white,
+                 0.0px  4.0px 4px white;
         }
 
         #page iframe {
@@ -224,7 +254,7 @@
             padding: 4px 0pt;
             margin: 4px 0pt;
             text-shadow: 0pt 1pt 2pt #000;
-            box-shadow: 0px -8px 15px #0008 inset;
+            box-shadow: 0px -9px 12px #0008 inset;
             color: white;
         }
 
@@ -243,6 +273,7 @@
 
         #pageList .listcontent button {
             width: 100%;
+            transition: transform 100ms ease, background-color 100ms ease;
             display: flex;
             flex-flow: row;
             border: none;
@@ -251,6 +282,15 @@
             margin: 4px 0pt;
             font-size: 14px;
             box-shadow: 0px -2pt 6pt #0008 inset;
+            background-color: white;
+        }
+        #pageList .listcontent button:hover {
+            background-color: #EEE;
+            transform: scale(1.03125);
+        }
+        #pageList .listcontent button:active {
+            background-color: #CCC;
+            transform: scale(.96875);
         }
         #indexToggle {
             width: calc(100% - 16pt);
@@ -282,7 +322,7 @@
             font-size: 24px;
             text-align: center;
             color: transparent;
-            background: linear-gradient(15deg, #4c2 0%, #0af 100%);
+            background: linear-gradient(15deg, #cf0 0%, #08f 100%);
             background-clip: text;
             -webkit-background-clip: text;
             text-shadow: 0px 1pt 1pt rgba(0, 0, 0, .333);
@@ -378,6 +418,7 @@
             9: "Support Information",
             10: "Special (Credits)",
         }
+        root = document.querySelector(":root")
         firstLoad = 0
         function newPage(num, cat) {
             currPageNum.innerText = num
@@ -387,14 +428,14 @@
                 pageframe.src = pages[num][1]
             }, 333)
             pageframe.classList = "hidden"
+            root.style.setProperty("--pageheader-border-radius", "12px")
         }
 
         function toggleIndex() {
-            let rs = document.querySelector(":root")
             let indiv = document.getElementById("index")
-            let is = getComputedStyle(rs).getPropertyValue("--index-bar-width")
+            let is = getComputedStyle(root).getPropertyValue("--index-bar-width")
             is = Number.parseInt(is.substring(0,is.length-2))
-            let i = getComputedStyle(rs).getPropertyValue("--index-bar-off")
+            let i = getComputedStyle(root).getPropertyValue("--index-bar-off")
             i = Number.parseInt(i.substring(0,i.length-2))
             if (!i) {
                 i = -is
@@ -403,14 +444,13 @@
                 i = 0
                 indiv.classList = ""
             }
-            rs.style.setProperty("--index-bar-off", i+"px")
+            root.style.setProperty("--index-bar-off", i+"px")
         }
         function setIndexToggle(bool) {
-            let rs = document.querySelector(":root")
             let indiv = document.getElementById("index")
-            let is = getComputedStyle(rs).getPropertyValue("--index-bar-width")
+            let is = getComputedStyle(root).getPropertyValue("--index-bar-width")
             is = Number.parseInt(is.substring(0,is.length-2))
-            let i = getComputedStyle(rs).getPropertyValue("--index-bar-off")
+            let i = getComputedStyle(root).getPropertyValue("--index-bar-off")
             i = Number.parseInt(i.substring(0,i.length-2))
             if (bool) {
                 i = -is
@@ -419,7 +459,7 @@
                 i = 0
                 indiv.classList = ""
             }
-            rs.style.setProperty("--index-bar-off", i+"px")
+            root.style.setProperty("--index-bar-off", i+"px")
         }
 
         function setup() {
@@ -468,6 +508,7 @@
                     }
                     firstLoad = 1
                     pageframe.classList = ""
+                    root.style.setProperty("--pageheader-border-radius", "0px")
                 }
             }
         }

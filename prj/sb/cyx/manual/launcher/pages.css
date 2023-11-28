@@ -4,12 +4,11 @@
 }
 
 :root {
-    --text-largest: 19px;
-    --text-large: 17.5px;
+    --text-largest: 20px;
+    --text-large: 18px;
     --text-medium: 16px;
-    --text-small: 14.5px;
-    --text-smallest: 13px;
-}
+    --text-small: 14px;
+    --text-smallest: 12px;}
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -26,11 +25,12 @@
     font-family: RodinNTLG, "nintendo_NTLG-DB_001", sans-serif;
     font-size: inherit;
     font-optical-sizing: none;
-    font-size-adjust: none;
+    font-size-adjust: ic-height from-font;
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
     text-justify: inter-character;
     word-break: break-word;
+    font-feature-settings: "liga" 0;
 }
 
 html {
@@ -47,13 +47,12 @@ html {
 
 body {
     background: var(--background);
-    box-shadow: 0px -8px 0px var(--background);
     border-radius: 0px 0px 8px 8px;
     color: var(--base-textcolor);
     margin: 0px;
     padding: 10px 0px;
     font-size: var(--text-medium);
-    line-height: 1.25;
+    line-height: 20px;
     word-wrap: break-word;
 }
 
@@ -63,35 +62,30 @@ img {
 
 p {
     margin: 0px;
-    padding: 0px 8px;
-    padding-bottom: 8px;
+    padding: 0px;
 }
 table, thead, tbody, tr, td {
     margin: 0px;
     padding: 0px;
 }
 table {
-    margin: 0px 8px;
-    max-width: calc(100% - 16px);
-    margin-bottom: 8px;
+    max-width: 100%;
 }
 ul, ol {
     padding: 0px;
     margin: 0px;
     padding-left: 32px;
     width: calc(100% - 40px);
-    margin-bottom: 8px;
 }
-table * {
-    margin-bottom: 0px;
-}
-.text-largest   {font-size: var(--text-largest);}
-.text-large     {font-size: var(--text-large);}
-.text-medium    {font-size: var(--text-medium);}
-.text-small     {font-size: var(--text-small);}
-.text-smallest  {font-size: var(--text-smallest);}
+
+.text-largest   {font-size: var(--text-largest); line-height: 24px;}
+.text-large     {font-size: var(--text-large); line-height: 22px;}
+.text-medium    {font-size: var(--text-medium); line-height: 20px;}
+.text-small     {font-size: var(--text-small); line-height: 18px;}
+.text-smallest  {font-size: var(--text-smallest); line-height: 16px;}
 .nowrap         {display: inline-block;}
 .remark         {color: gray;}
+.mainPad        {display: block; height: 10px;}
 
 hr {
     margin: 0px;
