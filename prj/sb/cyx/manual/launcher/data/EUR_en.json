@@ -1,0 +1,21 @@
+{
+    "pages": [
+        ["Introduction Page", "__first__.html"],
+        ["Important Information", "EUR_en/001.html"],
+        ["About SmileBASIC-CYX", "EUR_en/intro.html"],
+        ["Main Menu", "EUR_en/lncMain.html"],
+        ["Updates", "EUR_en/lncUpd.html"],
+        ["Settings", "EUR_en/lncSet.html"],
+        ["Main Menu", "EUR_en/plgMain.html"],
+    
+        ["Contact Information", "EUR_en/contact.html"]
+    ],
+
+    "categories": {
+            "2": "Getting Started",
+            "3": "Manager & Updater",
+            "6": "The CYX Plugin",
+            
+            "7": "Support Information"
+    }
+}

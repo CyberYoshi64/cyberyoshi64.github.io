@@ -8,12 +8,12 @@
     <style>
         @font-face {
             font-family: RodinNTLG;
-            src: url(/assets/fonts/CTRNTLG-DB.ttf);
+            src: url("/assets/fonts/CTRNTLG-DB-0001.ttf") format("truetype");
         }
         :root {
             --index-bar-width: 300px;
             --index-bar-off: 0px;
-            --pageheader-border-radius: 8px;
+            --pageheader-border-radius: 12px;
         }
 
         ::-webkit-scrollbar {
@@ -55,9 +55,7 @@
             border-radius: 0px 12pt 12pt 0;
             background-color: rgba(255, 255, 255, .75);
             backdrop-filter: blur(3pt);
-            box-shadow:
-                0px 0px 64pt black,
-                0px 0px 64pt black;
+            box-shadow: 0px 0px 12pt black;
             overflow: hidden;
         }
         #index.hidden {
@@ -194,7 +192,7 @@
             overflow-x: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            max-width: 278px;
+            max-width: calc(320px - 50px);
             text-shadow:
                 -1.5px  1.5px 2px white,
                  0.0px  2.0px 2px white,
@@ -223,18 +221,23 @@
             opacity: 0;
         }
 
-        #pageList {
+        #pageList, #langList {
             display: block;
             width: calc(100% - 16pt);
             flex-grow: 1;
             overflow-y: hidden;
             margin: 8pt;
+            transition: opacity 125ms ease;
+            opacity: 1;
             padding: 0;
             background: #0004;
             border-radius: 4px;
         }
+        #pageList.hidden {
+            opacity: 0;
+        }
 
-        #pageList .listcontent {
+        #pageList .listcontent, #langList .listcontent {
             width: calc(100% - 8pt);
             height: calc(100% - 16pt);
             scrollbar-gutter: both-edges stable;
@@ -265,13 +268,14 @@
             align-self: center;
             color: white;
             text-overflow: ellipsis;
+            white-space: nowrap;
             overflow-x: hidden;
         }
         #pageList .category div.dowrap {
             white-space: unset;
         }
 
-        #pageList .listcontent button {
+        #pageList .listcontent button, #langList .listcontent button {
             width: 100%;
             transition: transform 100ms ease, background-color 100ms ease;
             display: flex;
@@ -283,16 +287,51 @@
             font-size: 14px;
             box-shadow: 0px -2pt 6pt #0008 inset;
             background-color: white;
+            text-align: left;
         }
-        #pageList .listcontent button:hover {
+        #pageList .listcontent button:hover, #langList .listcontent button:hover {
             background-color: #EEE;
             transform: scale(1.03125);
         }
-        #pageList .listcontent button:active {
+        #pageList .listcontent button:active, #langList .listcontent button:active {
             background-color: #CCC;
             transform: scale(.96875);
         }
-        #indexToggle {
+
+        .indexButtons {
+            display: flex;
+            flex-flow: row;
+            margin: 0px 8pt;
+        }
+        
+        .langButtons {
+            display: flex;
+            flex-flow: row;
+            margin: 0px;
+            margin-left: 16pt;
+        }
+        
+        #indexToggle, .closeBtn {
+            width: calc(100% - 16pt);
+            display: block;
+            border: none;
+            border-radius: 8pt;
+            padding: 4pt;
+            margin: 0;
+            font-size: 14px;
+            background-color: #444;
+            box-shadow: 0px 0px 8px gray inset, 0px 0px 4px black;
+            color: white;
+        }
+        #indexToggle:hover, .closeBtn:hover {
+            background-color: #555;
+        }
+        #indexToggle:active, .closeBtn:active {
+            background-color: #333;
+            color: silver;
+        }
+
+        #indexGetLang, .whiteBtn {
             width: calc(100% - 16pt);
             display: block;
             border: none;
@@ -301,21 +340,83 @@
             margin: 0;
             margin-left: 8pt;
             font-size: 14px;
-            background-color: #444;
-            color: white;
+            background-color: #EEE;
+            box-shadow: 0px 0px 8px white inset, 0px 0px 4px black;
+            color: #333;
         }
-        #indexToggle:hover {
-            background-color: #555;
+        #indexGetLang:hover, .whiteBtn:hover {
+            background-color: white;
+        }
+        #indexGetLang:active, .whiteBtn:active {
+            background-color: silver;
+            color: #111;
         }
 
-        #pageList .listcontent button * {
+        #pageList .listcontent button *, #langList .listcontent button * {
             align-self: center;
         }
 
-        #pageList .pageLabel {
+        #pageList .pageLabel, #langList .pageLabel {
             max-width: calc(100% - 44px);
             text-overflow: ellipsis;
             overflow-x: hidden;
+            padding: 6px 0px;
+        }
+        .pageBtnContainer {
+            align-self: center;
+            position: absolute;
+            display: flex;
+            flex-flow: row;
+            bottom: 0px;
+            width: 320px;
+            margin-right: 16px;
+            height: 32px;
+            box-shadow: 0px 0px 12px black;
+            vertical-align: baseline;
+        }
+        .pageBtnContainer button {
+            width: 100%;
+            border: none;
+            border-left: 1px #fff6 solid;
+            border-right: 1px #0006 solid;
+            color: #222;
+            text-shadow: 0px 1px 0px white;
+            font-size: 14px;
+            background: linear-gradient(180deg, #e8f0ff 0%, #989ca0 100%);
+        }
+        .pageBtnContainer button:active {
+            border-top: 2px gray solid;
+            background: linear-gradient(180deg, #303840 0%, #889098 100%);
+            color: white;
+            text-shadow: 0px -1px 0px black;
+        }
+        .pageBtnContainer button:disabled {
+            background: gray;
+            color: #666;
+            text-shadow: none;
+        }
+
+        #langSel {
+            position: fixed;
+            display: flex;
+            flex-flow: column;
+            transition:
+                right 333ms ease-out,
+                opacity 250ms ease;
+            backdrop-filter: blur(4pt);
+            background: #cccc;
+            box-shadow: 0px 0px 8px black, 0px 0px 16px white inset;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            bottom: 0%;
+            padding: 10px;
+            overflow: hidden;
+            right: 0%;
+            opacity: 1;
+        }
+        #langSel.hidden {
+            right: -100%;
+            opacity: 0;
         }
 
         h1 {
@@ -371,6 +472,10 @@
                     <div id="currPageLabel">Loading…</div>
                 </div>
             </div>
+            <div class="pageBtnContainer">
+                <button id="pageBtnPrev" onclick="newPage(currentPage - 1)" disabled> Previous page</button>
+                <button id="pageBtnNext" onclick="newPage(currentPage + 1)" disabled>Next page </button>
+            </div>
         </div>
         <div id="index">
             <h1>Manual Concepts</h1>
@@ -388,133 +493,224 @@
                     <hr>
                 </div>
             </div>
-            <button id="indexToggle" onclick="toggleIndex()">Hide this panel</button>
+            <div class="indexButtons">
+                <button id="indexToggle" onclick="toggleIndex()"> Hide</button>
+                <button id="indexGetLang" onclick="setLang()"> Language</button>
+            </div>
+        </div>
+    </div>
+    <div id="langSel" class="hidden">
+        <h2>Language Select</h2>
+        <div id="langList">
+            <div id="langListC" class="listcontent"></div>
+        </div>
+        <div class="langButtons">
+            <button class="closeBtn" onclick="hideLangSel()"> Close</button>
         </div>
     </div>
     <script>
-        pages = [
-            ["Introduction Page", "./pageDummy.html"],
-            ["Important Information", "./pages/001.html"],
-            ["Introduction", "./pages/intro.html"],
-            ["Main Menu", "./pages/lncMain.html"],
-            ["Updates", "./pages/lncUpd.html"],
-            ["Settings", "./pages/lncSet.html"],
-            ["Main Menu", "./pages/plgMain.html"],
-            ["{Test1}", "./pages/test1.html"],
-            ["{Test2}", "./pages/test2.html"],
+        currentPage = 0;
+        blockNewPage = false;
+        firstLoad = 0;
+        firstPage = 0;
+        language = 0;
 
-            ["Support Information", "./pages/contact.html"],
-            ["Special – Top Page", "./pages/specHome.html"],
-            ["Credits", "./pages/credits.html"],
-            ["OSS Licenses", "./pages/licenses.html"],
-        ]
-        categories = {
-            2: "Getting Started",
-            3: "Manager & Updater",
-            6: "The CYX Plugin",
-            
-            7: "[STANDING BY]",
+        lang = []
+        pages = []
+        categories = []
 
-            9: "Support Information",
-            10: "Special (Credits)",
-        }
-        root = document.querySelector(":root")
-        firstLoad = 0
-        function newPage(num, cat) {
-            currPageNum.innerText = num
-            currPageCat.classList = ["pageCount cat" + ((cat - 1) % 12 + 1)]
-            currPageLabel.innerText = pages[num][0]
+        root = document.querySelector(":root");
+        firstLoad = 0;
+        function newPage(num) {
+            if (num < firstPage) num = firstPage
+            if (num >= pages.length || blockNewPage) return;
+            blockNewPage = true;
+            pageBtnPrev.disabled = true;
+            pageBtnNext.disabled = true;
+            currPageNum.innerText = num;
+            currPageCat.classList = ["pageCount cat" + ((pages[num][2] - 1) % 12 + 1)];
+            currPageLabel.innerText = pages[num][0];
             window.setTimeout(function(){
-                pageframe.src = pages[num][1]
+                pageframe.src = "./data/"+pages[num][1];
+                currentPage = num;
+                pageBtnPrev.disabled = (currentPage <= firstPage);
+                pageBtnNext.disabled = (currentPage >= pages.length-1);
             }, 333)
-            pageframe.classList = "hidden"
-            root.style.setProperty("--pageheader-border-radius", "12px")
+            pageframe.classList = "hidden";
+            root.style.setProperty("--pageheader-border-radius", "12px");
         }
 
         function toggleIndex() {
-            let indiv = document.getElementById("index")
-            let is = getComputedStyle(root).getPropertyValue("--index-bar-width")
-            is = Number.parseInt(is.substring(0,is.length-2))
-            let i = getComputedStyle(root).getPropertyValue("--index-bar-off")
-            i = Number.parseInt(i.substring(0,i.length-2))
+            let is = getComputedStyle(root).getPropertyValue("--index-bar-width");
+            is = Number.parseInt(is.substring(0,is.length-2));
+            let i = getComputedStyle(root).getPropertyValue("--index-bar-off");
+            i = Number.parseInt(i.substring(0,i.length-2));
             if (!i) {
-                i = -is
-                indiv.classList = "hidden"
+                i = -is;
+                index.classList = "hidden";
             } else {
-                i = 0
-                indiv.classList = ""
+                i = 0;
+                index.classList = "";
             }
-            root.style.setProperty("--index-bar-off", i+"px")
+            root.style.setProperty("--index-bar-off", i+"px");
         }
         function setIndexToggle(bool) {
-            let indiv = document.getElementById("index")
-            let is = getComputedStyle(root).getPropertyValue("--index-bar-width")
-            is = Number.parseInt(is.substring(0,is.length-2))
-            let i = getComputedStyle(root).getPropertyValue("--index-bar-off")
-            i = Number.parseInt(i.substring(0,i.length-2))
+            let is = getComputedStyle(root).getPropertyValue("--index-bar-width");
+            is = Number.parseInt(is.substring(0,is.length-2));
+            let i = getComputedStyle(root).getPropertyValue("--index-bar-off");
+            i = Number.parseInt(i.substring(0,i.length-2));
             if (bool) {
-                i = -is
-                indiv.classList = "hidden"
+                i = -is;
+                index.classList = "hidden";
             } else {
-                i = 0
-                indiv.classList = ""
+                i = 0;
+                index.classList = "";
             }
-            root.style.setProperty("--index-bar-off", i+"px")
+            root.style.setProperty("--index-bar-off", i+"px");
+        }
+
+        function setLang() {
+            let indiv = document.getElementById("langSel");
+            indiv.classList = "";
+            //indiv.classList = "hidden";
+        }
+
+        function hideLangSel() {
+            let indiv = document.getElementById("langSel");
+            indiv.classList = "hidden";
+        }
+
+        function setLangSel() {
+            let indiv = document.getElementById("langSel");
+            indiv.classList = "hidden";
+            getData()
         }
 
         function setup() {
-            let ccat = 0
+            let ccat = 0;
             let ccatR = 0;
+
+            pageListC.innerHTML = "";
+            firstPage = 1;
+            if (pages[0][1]!="") {
+                let b1 = document.createElement("button");
+                let d1 = document.createElement("div");
+                d1.classList = "pageCount"
+                let d11 = document.createElement("div");
+                d11.innerText = 0;
+                let d2 = document.createElement("div");
+                d2.classList = "pageLabel"
+                d2.innerText = pages[0][0];
+                d1.append(d11);
+                b1.append(d1);
+                b1.append(d2);
+                b1.onclick = function(){newPage(0)};
+                pageListC.append(b1);
+                b1 = document.createElement("hr");
+                pageListC.append(b1);
+                firstPage = 0;
+            }
+
             for (let i = 1; i < pages.length; i++) {
                 if (categories[i] != null) {
-                    if (i) ccat++;
-                    let ccatR = ((ccat) % 12 + 1)
-                    let d1 = document.createElement("div")
-                    d1.classList = "category cat" + ccatR
-                    let d2 = document.createElement("div")
-                    d2.innerText = categories[i];
-                    d1.append(d2)
-                    pageListC.append(d1)
+                    if (i > 1) ccat++;
+                    let ccatR = ((ccat) % 12 + 1);
+                    let d1 = document.createElement("div");
+                    d1.classList = "category cat" + ccatR;
+                    let d2 = document.createElement("div");
+                    d2.innerText = categories[i];;
+                    d1.append(d2);
+                    pageListC.append(d1);
                 }
-                let ccatR = ((ccat) % 12 + 1)
-                let b1 = document.createElement("button")
-                let d1 = document.createElement("div")
-                d1.classList = "pageCount cat" + ccatR
-                let d11 = document.createElement("div")
-                d11.innerText = i
-                let d2 = document.createElement("div")
-                d2.innerText = pages[i][0]
-                d1.append(d11)
-                b1.append(d1)
-                b1.append(d2)
-                b1.pcat = ccat + 1
-                b1.pnum = i
-                b1.onclick = function(){newPage(b1.pnum, b1.pcat)}
-                pageListC.append(b1)
+                let ccatR = ((ccat) % 12 + 1);
+                pages[i].push(ccatR);
+                let b1 = document.createElement("button");
+                let d1 = document.createElement("div");
+                d1.classList = "pageCount cat" + ccatR;
+                let d11 = document.createElement("div");
+                d11.innerText = i;
+                let d2 = document.createElement("div");
+                d2.classList = "pageLabel"
+                d2.innerText = pages[i][0];
+                d1.append(d11);
+                b1.append(d1);
+                b1.append(d2);
+                b1.pnum = i;
+                b1.onclick = function(){newPage(b1.pnum)};
+                pageListC.append(b1);
             }
             if (pages.length < 2) {
-                let d1 = document.createElement("div")
-                d1.classList = "category cat1"
-                let d2 = document.createElement("div")
-                d2.classList = "doWrap"
+                let d1 = document.createElement("div");
+                d1.classList = "category cat1";
+                let d2 = document.createElement("div");
+                d2.classList = "doWrap";
                 d2.innerText = "There are no pages present.\nCheck again later.";
-                d1.append(d2)
-                pageListC.append(d1)
+                d1.append(d2);
+                pageListC.append(d1);
             }
-            pageframe.onload = function(){ // iframe loads in - we don't care about it
-                pageframe.onload = function(){
-                    if (window.visualViewport.width < 640) {
-                        setIndexToggle(firstLoad)
-                    }
-                    firstLoad = 1
-                    pageframe.classList = ""
-                    root.style.setProperty("--pageheader-border-radius", "0px")
+            pageframe.onload = function(){
+                if (window.innerWidth < 640) {
+                    setIndexToggle(firstLoad);
                 }
+                blockNewPage = false;
+                firstLoad = 1;
+                pageframe.classList = "";
+                root.style.setProperty("--pageheader-border-radius", "0px");
             }
         }
 
-        setup();
-        newPage(0,0)
+        function fetchData(url) {
+            return fetch(url)
+                .then(function(response) {return response.json();})
+                .finally(function(json) {return json;})
+                .catch(function(err) {console.log(err);})
+        };
+        function getData() {
+            firstLoad = 0;
+            root.style.setProperty("--pageheader-border-radius", "12px");
+            pageframe.classList = "hidden";
+            pageList.classList = "hidden";
+            pageBtnPrev.disabled = true;
+            pageBtnNext.disabled = true;
+            window.setTimeout(async function(){
+                if (!lang.length) {
+                    try {
+                        await fetchData('./data/lang.json').then((json)=>{lang = json.lang});
+                    } finally {
+                        langListC.innerHTML = "";
+                        for (let i=0; i<lang.length; i++){
+                            let b1 = document.createElement("button");
+                            let d1 = document.createElement("div");
+                            d1.classList = "pageCount"
+                            let d11 = document.createElement("div");
+                            d11.innerText = "";
+                            let d2 = document.createElement("div");
+                            d2.classList = "pageLabel"
+                            d2.innerText = lang[i][1];
+                            d1.append(d11);
+                            b1.append(d1);
+                            b1.append(d2);
+                            b1.onclick = function(){language = i; setLangSel()};
+                            langListC.append(b1);
+                        }
+                    }
+                }
+                if (language < 0 || language >= lang.length) language = 0
+                pages = []
+                categories = []
+                try {
+                    await fetchData('./data/' + lang[language][0] + '.json').then((json)=>{pages = json.pages; categories = json.categories});
+                } catch (e) {
+                    alert("An error has occured while getting the data:\n\n"+e)
+                } finally {
+                    await setup();
+                    await newPage(0);
+                }
+                pageList.classList = "";
+            }, 125);
+        };
+
+        getData();
 
     </script>
 </body>

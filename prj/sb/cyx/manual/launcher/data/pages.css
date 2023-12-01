@@ -1,6 +1,6 @@
 @font-face {
     font-family: RodinNTLG;
-    src: url(/assets/fonts/CTRNTLG-DB.ttf);
+	src: url("/assets/fonts/CTRNTLG-DB-0001.ttf") format("truetype");
 }
 
 :root {
@@ -39,7 +39,7 @@ html {
     scrollbar-color: #4cf #0000;
     overflow-x: hidden;
     padding-top: 40px;
-    padding-bottom: 16px;
+    padding-bottom: 48px;
     /*padding-left: calc((100% - 320px)/2);*/
     width: 320px;
     max-width: 320px;

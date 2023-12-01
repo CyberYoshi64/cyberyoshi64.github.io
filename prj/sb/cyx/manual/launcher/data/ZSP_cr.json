@@ -1,0 +1,13 @@
+{
+    "pages": [
+        ["", ""],
+        ["Top Page", "ZSP_cr/specHome.html"],
+        ["Libraries & Utilities Used", "ZSP_cr/credits.html"],
+        ["OSS Licenses", "ZSP_cr/licenses.html"]
+    ],
+
+    "categories": {
+        "1": "-- Special Content --",
+        "2": "Credits"
+    }
+}
