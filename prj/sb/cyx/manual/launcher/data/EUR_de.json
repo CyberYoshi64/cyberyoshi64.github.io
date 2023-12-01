@@ -1,6 +1,6 @@
 {
     "pages": [
-        ["Einführungsseite", "__first__.html"],
+        ["Einführungsseite", "first.html"],
         ["Wichtige Informationen", "EUR_de/001.html"],
         ["Über SmileBASIC-CYX", "EUR_de/intro.html"],
         ["Hauptmenü", "EUR_de/lncMain.html"],
