@@ -233,7 +233,7 @@
             background: #0004;
             border-radius: 4px;
         }
-        #pageList.hidden {
+        #pageList.hidden, #langList.hidden {
             opacity: 0;
         }
 
@@ -277,7 +277,11 @@
 
         #pageList .listcontent button, #langList .listcontent button {
             width: 100%;
-            transition: transform 100ms ease, background-color 100ms ease;
+            transition:
+                transform 100ms ease,
+                box-shadow 100ms ease,
+                color 100ms ease,
+                background-color 100ms ease;
             display: flex;
             flex-flow: row;
             border: none;
@@ -285,17 +289,21 @@
             padding: 0pt;
             margin: 4px 0pt;
             font-size: 14px;
-            box-shadow: 0px -2pt 6pt #0008 inset;
-            background-color: white;
+            box-shadow: 0px -2pt 6pt #0008 inset, 0px 2px 4px #0008;
+            background-color: #EEE;
+            color: #333;
             text-align: left;
         }
         #pageList .listcontent button:hover, #langList .listcontent button:hover {
-            background-color: #EEE;
-            transform: scale(1.03125);
+            background-color: white;
+            box-shadow: 0px -1pt 3pt #0008 inset, 0px 3px 4px #000a;
+            color: #555;
         }
         #pageList .listcontent button:active, #langList .listcontent button:active {
-            background-color: #CCC;
-            transform: scale(.96875);
+            background-color: #AAA;
+            box-shadow: 0px -3pt 9pt #0008 inset, 0px 0px 0px #000;
+            color: black;
+            transform: scale(.9875) translateY(2px);
         }
 
         .indexButtons {
@@ -307,8 +315,8 @@
         .langButtons {
             display: flex;
             flex-flow: row;
-            margin: 0px;
-            margin-left: 16pt;
+            margin: 4pt 0px;
+            margin-left: 10pt;
         }
         
         #indexToggle, .closeBtn {
@@ -317,7 +325,7 @@
             border: none;
             border-radius: 8pt;
             padding: 4pt;
-            margin: 0;
+            margin: 0px 4pt;
             font-size: 14px;
             background-color: #444;
             box-shadow: 0px 0px 8px gray inset, 0px 0px 4px black;
@@ -337,8 +345,7 @@
             border: none;
             border-radius: 8pt;
             padding: 4pt;
-            margin: 0;
-            margin-left: 8pt;
+            margin: 0px 4pt;
             font-size: 14px;
             background-color: #EEE;
             box-shadow: 0px 0px 8px white inset, 0px 0px 4px black;
@@ -505,6 +512,9 @@
             <div id="langListC" class="listcontent"></div>
         </div>
         <div class="langButtons">
+            <button class="whiteBtn" onclick="reloadData()"> Refresh languages</button>
+        </div>
+        <div class="langButtons">
             <button class="closeBtn" onclick="hideLangSel()"> Close</button>
         </div>
     </div>
@@ -665,11 +675,16 @@
                 .finally(function(json) {return json;})
                 .catch(function(err) {console.log(err);})
         };
+        function reloadData() {
+            lang = [];
+            getData();
+        }
         function getData() {
             firstLoad = 0;
             root.style.setProperty("--pageheader-border-radius", "12px");
             pageframe.classList = "hidden";
             pageList.classList = "hidden";
+            langList.classList = "hidden";
             pageBtnPrev.disabled = true;
             pageBtnNext.disabled = true;
             window.setTimeout(async function(){
@@ -707,6 +722,7 @@
                     await newPage(0);
                 }
                 pageList.classList = "";
+                langList.classList = "";
             }, 125);
         };
 
