@@ -719,6 +719,7 @@
                     alert("An error has occured while getting the data:\n\n"+e)
                 } finally {
                     await setup();
+                    blockNewPage = false;
                     await newPage(0);
                 }
                 pageList.classList = "";
