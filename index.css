@@ -16,11 +16,21 @@
 	--dividerline-strength: 4pt;
 }
 
+iframe {
+	border: none;
+}
+
+iframe.img {
+	user-select: none;
+	pointer-events: none;
+}
+
 body {
 	margin: 0px;
 	font-size: var(--main-font-sz);
 	font-family: var(--main-font);
 	background: #182030;
+	color: white;
 	width: 100vw;
 	scroll-behavior: smooth;
 	overflow-x: hidden;

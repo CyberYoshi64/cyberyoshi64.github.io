@@ -27,6 +27,7 @@
         }
         body {
             background: rgb(32, 36, 52);
+            color: rgb(32, 36, 52);
             margin: 0;
             font-size: 14px;
         }
@@ -40,7 +41,14 @@
         body, button {
             font-family: RodinNTLG, "nintendo_NTLG-DB_002", "nintendo_NTLG-DB_001", sans-serif;
         }
-
+        hr {
+            margin: 8px 7px 8px 0px;
+            margin-left: 7px;
+            border: none;
+            width: calc(100% - 14px);
+            height: 2px;
+            background-color: rgba(64,64,64,.5);
+        }
         #index {
             position: fixed;
             display: flex;
@@ -117,53 +125,18 @@
             align-self: top;
         }
 
-        .cat1 {
-            background: #e88480;
-        }
-
-        .cat2 {
-            background: #98d068;
-        }
-
-        .cat3 {
-            background: #70b4d8;
-        }
-
-        .cat4 {
-            background: #e0c858;
-        }
-
-        .cat5 {
-            background: #9888d0;
-        }
-
-        .cat6 {
-            background: #b0b860;
-        }
-
-        .cat7 {
-            background: #90a8e8;
-        }
-
-        .cat8 {
-            background: #e89070;
-        }
-
-        .cat9 {
-            background: #78ccb0;
-        }
-
-        .cat10 {
-            background: #d09cd0;
-        }
-
-        .cat11 {
-            background: #d8b060;
-        }
-
-        .cat12 {
-            background: #a0bcb8;
-        }
+        .cat1 {background: #e88480;}
+        .cat2 {background: #98d068;}
+        .cat3 {background: #70b4d8;}
+        .cat4 {background: #e0c858;}
+        .cat5 {background: #9888d0;}
+        .cat6 {background: #b0b860;}
+        .cat7 {background: #90a8e8;}
+        .cat8 {background: #e89070;}
+        .cat9 {background: #78ccb0;}
+        .cat10 {background: #d09cd0;}
+        .cat11 {background: #d8b060;}
+        .cat12 {background: #a0bcb8;}
 
         .pageCount div {
             display: table-cell;
@@ -378,14 +351,15 @@
             width: 320px;
             margin-right: 16px;
             height: 32px;
+            border-radius: 12px;
             box-shadow: 0px 0px 12px black;
             vertical-align: baseline;
         }
         .pageBtnContainer button {
             width: 100%;
             border: none;
-            border-left: 1px #fff6 solid;
-            border-right: 1px #0006 solid;
+            border-left: 1px #fff4 solid;
+            border-right: 1px #0004 solid;
             color: #222;
             text-shadow: 0px 1px 0px white;
             font-size: 14px;
@@ -401,6 +375,12 @@
             background: gray;
             color: #666;
             text-shadow: none;
+        }
+        #pageBtnPrev {
+            border-radius: 12px 0 0 0;
+        }
+        #pageBtnNext {
+            border-radius: 0 12px 0 0;
         }
 
         #langSel {
@@ -426,9 +406,7 @@
             opacity: 0;
         }
 
-        h1 {
-            font-size: 24px;
-            text-align: center;
+        .hdrspecial {
             color: transparent;
             background: linear-gradient(15deg, #cf0 0%, #08f 100%);
             background-clip: text;
@@ -436,34 +414,18 @@
             text-shadow: 0px 1pt 1pt rgba(0, 0, 0, .333);
         }
 
-        h2, h3, h4, h5, h6 {
+        h1, h2, h3, h4, h5, h6 {
             text-align: center;
             text-shadow: 0px .15rem 1pt #fff;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
             margin: 4pt 0pt;
         }
 
-        h2 {
-            font-size: 22px;
-        }
-
-        h3 {
-            font-size: 20px;
-        }
-
-        h4 {
-            font-size: 18px;
-        }
-
-        h5 {
-            font-size: 16px;
-        }
-
-        h6 {
-            font-size: 14px;
-        }
+        h1 {font-size: 24px;}
+        h2 {font-size: 22px;}
+        h3 {font-size: 20px;}
+        h4 {font-size: 18px;}
+        h5 {font-size: 16px;}
+        h6 {font-size: 14px;}
     </style>
 </head>
 
@@ -485,8 +447,8 @@
             </div>
         </div>
         <div id="index">
-            <h1>Manual Concepts</h1>
-            <h4>Table Of Contents</h4>
+            <h2 class="hdrspecial">Manual Concepts</h2>
+            <h6>Table Of Contents</h6>
             <div id="pageList">
                 <div id="pageListC" class="listcontent">
                     <button type="button" onclick="newPage(0,0)">
@@ -507,7 +469,7 @@
         </div>
     </div>
     <div id="langSel" class="hidden">
-        <h2>Language Select</h2>
+        <h3>Language Select</h3>
         <div id="langList">
             <div id="langListC" class="listcontent"></div>
         </div>

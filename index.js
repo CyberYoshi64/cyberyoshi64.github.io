@@ -35,8 +35,22 @@ for (var i = 0; i < dropdownlist.length; i++){
 var headerDiv = document.getElementById("header")
 if (headerDiv != null) {
     headerDiv.innerHTML = `
+    <div id="headerNav" class="disabled"></div>
     <a id="headerLogo" href="/" title="To the homepage"></a>
     <div id="headerLogo2" class="rspn_hide"></div>
-    <div id="headerNav" class="disabled"></div>
     `
+}
+var scrboxes = document.getElementsByClassName("scrbox")
+for (var i = 0; i < scrboxes.length; i++) {
+    e = scrboxes.item(i)
+    e.innerHTML = ""
+    e.style = "opacity: 0;"
+    i1 = document.createElement("embed")
+    i1.src = "/assets/images/arrow-left.svg"
+    i1.width = i1.height = "32px"
+    i1.onload = function (){
+        i1.getSVGDocument().getElementById("arrow").attributes.fill.value = "#000"
+        e.style = "opacity: 1;"
+    }
+    e.appendChild(i1)
 }
