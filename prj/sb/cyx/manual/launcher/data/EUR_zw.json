@@ -1,0 +1,13 @@
+{
+    "pages": [
+        ["", ""],
+        ["Top Page", "EUR_zw/specHome.html"],
+        ["Libraries & Utilities Used", "EUR_zw/credits.html"],
+        ["OSS Licenses", "EUR_zw/licenses.html"]
+    ],
+
+    "categories": {
+        "1": "-- Special Content --",
+        "2": "Credits"
+    }
+}

@@ -2,7 +2,7 @@
     "lang": [
         ["EUR_en", "English"],
         ["EUR_de", "Deutsch"],
-        ["ZSP_cr", "Special (Credits)"],
+        ["EUR_zw", "Special (Credits)"],
         ["AAA_aa", "Test language\n[To be removed]"]
     ]
 }
