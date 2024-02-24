@@ -188,7 +188,6 @@ pad {
 	display: block;
 	width: calc(100% - 60pt);
 	padding: 20pt 30pt;
-	padding-bottom: 15vh;
 }
 
 pad2 {
@@ -256,7 +255,18 @@ div.divbtnsw h3, div.divbtnsw h4, div.divbtnsw h5, div.divbtnsw h6 {
 }
 
 .btnknob, .btnswed {
-	transition: all 750ms cubic-bezier(0.6, -0.66, 0.4, 2.5);
+	transition: all 500ms cubic-bezier(0.6, -0.66, 0.4, 2.5);
+}
+
+div.divbtnsw pad {
+	padding: 16px 0 16px 16px;
+	width: calc(100% - 32px);
+	max-width: calc(100% - 32px);
+}
+
+div.dropdown {
+	margin-top: 4pt;
+	margin-bottom: 4pt;
 }
 
 div.divbtnsw {
@@ -265,15 +275,16 @@ div.divbtnsw {
 	max-width: 100%;
 	overflow-x:clip;
 	overflow-y:scroll;
-	transition: all 750ms cubic-bezier(0.6, -0.66, 0.4, 1.5);
-	padding: 6pt; border-radius: 12pt; background: rgba(52, 105, 158, 0.25);
+	scrollbar-width: none;
+	transition: all 250ms;
+	padding: 0; border-radius: 0 0 12px 12px;
+	background: rgba(52, 105, 158, 0.25);
 }
 
 div#pagecontent * button {
 	border: none;
-	border-radius: 12pt;
+	border-radius: 12px;
 	padding: 6pt;
-	margin: 2pt -2pt;
 	transition: all 250ms;
 	background: rgba(255, 255, 255, 0.25);
 	font-family: var(--main-font);
@@ -287,7 +298,6 @@ div#pagecontent * button.wrapn0 {
 
 div#pagecontent * button.wrap1 {
 	width: 100%;
-	margin: 2pt 0px;
 }
 
 div#pagecontent * button.wrap2 {
@@ -314,6 +324,33 @@ div#pagecontent * button:active {
 
 div#pagecontent * button table {
 	color:#fff;
+}
+
+.imgmerge64px {
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+}
+
+.imgmerge64px * {
+	position: absolute;
+	transition: all 250ms ease;
+	opacity: 0;
+	transform: translateX(-32px) perspective(128px) rotateY(90deg);
+}
+
+.imgmerge64px .t1 {
+	opacity: 1;
+	transform: translateX(-32px) perspective(128px) rotateY(0deg);
+}
+
+tr:hover .imgmerge64px .t1 {
+	opacity: 0;
+	transform: translateX(-32px) perspective(128px) rotateY(-90deg);
+}
+tr:hover .imgmerge64px .t2 {
+	opacity: 1;
+	transform: translateX(-32px) perspective(128px) rotateY(0deg);
 }
 
 .imgshdw {box-shadow: 0px 5pt 10pt 5pt rgba(0, 0, 0, 0.5);}
@@ -413,5 +450,10 @@ a:active button.insdbar {
 		width: 800px;
 		padding: 20pt 0px 20pt calc(50% - 400px);
 		padding-bottom: 10vh;
+	}
+	div.divbtnsw pad {
+		padding: 16px 0 16px 16px;
+		width: calc(100% - 32px);
+		max-width: calc(100% - 32px);
 	}
 }

@@ -24,11 +24,13 @@ for (var i = 0; i < dropdownlist.length; i++){
     dropdownlist[i].children[0].onclick = function() {
         var lse=Number.parseInt(this.value); // get where I came from
         var knob=dropdownlist[lse].children[0].getElementsByClassName("dropdown-knob")[0]
-        var cont=dropdownlist[lse].children[1], conhid=Number.parseInt(cont.value)
+        var but=dropdownlist[lse].children[0], cont=dropdownlist[lse].children[1]
+        var conhid=Number.parseInt(cont.value)
         if (conhid==NaN) conhid=0
         cont.value = (conhid + 1) % 2
+        but.style = "transform: none; border-radius: 12px 12px "+(12*!conhid+"px ")+(12*!conhid+"px ")+";"
         knob.style = "transform: rotate("+(conhid * 90)+"deg);"
-        cont.style = "height: "+iff(conhid, "0px", "40vh")+"; margin: "+conhid * 8+"px 0px; opacity: "+conhid+"; padding: "+conhid * 16+"px;"
+        cont.style = "height: "+iff(conhid, "0px", (cont.scrollHeight)+"px")+"; opacity: "+conhid+";  border-radius: "+(12*!conhid+"px ")+(12*!conhid+"px ")+"12px 12px;"
     }
 }
 
