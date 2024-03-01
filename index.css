@@ -130,7 +130,7 @@ div.divbtnsw::-webkit-scrollbar-thumb{
 #headerLogo2 {
 	position: absolute;
 	width: 192px; height: 32px;
-	background-image: url(/assets/images/cy64ic11.png);
+	background-image: url(/assets/images/cy64logo.svg);
 	background-size: 192px 32px;
 	left: 56pt; top: calc(var(--header-height) / 2 - 16px);
 }
